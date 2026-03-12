@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
+    <!-- 검색엔진차단-->
+    <meta name = "robots" content="noindex, nofollow">
     <!-- OG -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://RootYunji.github.io/wedding-invitation">
@@ -20,9 +21,8 @@
     
 </head>
 
-<body class="antialiased h-screen w-screen overflow-hidden flex items-center justify-center relative bg-zinc-100">
-
-    <div id="app-container" class="w-full h-full max-w-md bg-white shadow-2xl relative overflow-y-auto flex flex-col">
+<body class="antialiased h-[100dvh] w-full overflow-hidden flex items-center justify-center relative bg-zinc-100">
+    <div id="app-container" class="w-full h-full max-w-md bg-white shadow-2xl relative overflow-y-auto overflow-x-hidden flex flex-col mx-auto">
         
         <header class="p-4 text-center border-b border-zinc-100 bg-white/90 backdrop-blur sticky top-0 z-20 hidden" id="app-header">
             <h1 class="text-sm font-bold text-zinc-800 tracking-widest serif-en">WEDDING INVITATION</h1>
@@ -51,12 +51,12 @@
 
                 <div class="border-t border-zinc-200 pt-5 mt-4 relative">
                     <p class="text-xs text-zinc-400 mb-3 font-medium">소소한 재미와 상품이 있는 미니게임 🎁</p>
-                    <div class="flex gap-2">
-                        <input type="text" id="guest-name" placeholder="방명록 이름" class="flex-1 px-4 py-3 rounded-full border border-zinc-300 focus:outline-none focus:border-red-600 text-center text-zinc-800 bg-white placeholder-zinc-400 text-sm shadow-sm" maxlength="10">
-                        <button id="btn-start-game" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full transition whitespace-nowrap text-sm shadow-md">
-                            게임 도전
-                        </button>
-                    </div>
+                    <div class="flex gap-2 w-full">
+    <input type="text" id="guest-name" placeholder="방명록 이름" class="min-w-0 flex-1 px-4 py-3 rounded-full border border-zinc-300 focus:outline-none focus:border-red-600 text-center text-zinc-800 bg-white placeholder-zinc-400 text-sm shadow-sm" maxlength="10">
+    <button id="btn-start-game" class="flex-shrink-0 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-full transition whitespace-nowrap text-sm shadow-md">
+        도전
+    </button>
+</div>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
             
             <div class="text-zinc-400 text-sm mb-4 font-sans-kr font-medium">도전 횟수: <span id="stage1-attempts" class="text-xl font-bold text-red-600">1</span>회</div>
 
-            <div class="slot-machine p-6 w-full max-w-xs mb-8 flex justify-between gap-4 relative">
+            <div class="slot-machine p-4 w-full max-w-[300px] mb-8 flex justify-between gap-2 relative mx-auto">
                 <div class="flex-1 flex flex-col gap-2">
                     <div class="slot-window" id="btn-stop-1">
                         <div class="slot-numbers" id="reel-1">7</div>
