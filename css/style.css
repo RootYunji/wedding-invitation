@@ -1,10 +1,23 @@
-/* css/style.css */
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important; /* 강제 가로 스크롤 차단 */
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
 body {
     font-family: 'Noto Serif KR', serif;
     background-color: #f9f9f9; 
     color: #1a1a1a;
     touch-action: manipulation;
     user-select: none;
+    height: 100dvh;
 }
 .font-sans-kr {
     font-family: 'Noto Sans KR', sans-serif;
