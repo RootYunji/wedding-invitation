@@ -1,0 +1,92 @@
+/* css/style.css */
+body {
+    font-family: 'Noto Serif KR', serif;
+    background-color: #f9f9f9; 
+    color: #1a1a1a;
+    touch-action: manipulation;
+    user-select: none;
+}
+.font-sans-kr {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.serif-en {
+    font-family: 'Playfair Display', serif;
+}
+
+/* 1단계: 슬롯머신 스타일 */
+.slot-machine {
+    background: #ffffff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border: 1px solid #e5e5e5;
+    border-radius: 1.5rem;
+}
+.slot-window {
+    background: #fdfdfd;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #e5e5e5;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.slot-window:active {
+    transform: scale(0.95);
+}
+.slot-numbers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 100px;
+    color: #dc2626;
+    font-family: 'Playfair Display', serif;
+}
+
+/* 3단계: 퍼즐 스타일 */
+#puzzle-grid {
+    display: grid;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    gap: 2px;
+    background-color: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+.puzzle-piece {
+    background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
+    cursor: pointer;
+    transition: transform 0.1s, border 0.1s;
+}
+.puzzle-piece.selected {
+    border: 3px solid #dc2626;
+    transform: scale(0.92);
+    z-index: 10;
+}
+
+/* 애니메이션 */
+.fade-in { animation: fadeIn 0.8s ease-in-out forwards; }
+.slide-up { animation: slideUp 1s ease-out forwards; }
+.shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+::-webkit-scrollbar { display: none; }
