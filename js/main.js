@@ -17,7 +17,7 @@ document.getElementById('btn-direct-invite').addEventListener('click', () => {
 document.getElementById('btn-start-game').addEventListener('click', () => {
     const nameInput = document.getElementById('guest-name').value.trim();
     if(!nameInput) {
-        alert("이름을 입력해주세요!");
+        alert("이름(별명)을 입력해주세요!");
         return;
     }
     state.guestName = nameInput;
