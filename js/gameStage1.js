@@ -1,7 +1,7 @@
 // [게임1] 777 슬롯
 import { state } from './gameState.js';
 import { navigateTo } from './ui.js';
-import { startStage2 } from './gameStage2.js';
+import { initStage2 } from './gameStage2.js';
 
 const reelEls = [document.getElementById('reel-1'), document.getElementById('reel-2'), document.getElementById('reel-3')];
 const stopBtns = [document.getElementById('btn-stop-1'), document.getElementById('btn-stop-2'), document.getElementById('btn-stop-3')];
@@ -116,7 +116,7 @@ function checkS1State(lastStoppedIndex) {
         
         setTimeout(() => {
             navigateTo('stage2', true); // 🌟 [업데이트] 히스토리 덮어쓰기 적용
-            startStage2(); 
+            initStage2(); 
         }, 1500);
     }
 }
