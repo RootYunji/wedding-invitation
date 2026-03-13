@@ -41,7 +41,7 @@ export function initStage2() {
     if(s2RecordDisplay) s2RecordDisplay.innerText = "10.31"; 
 
     // 🌟 [업데이트] 자동 시작 대신 안내 문구 변경
-    s2Msg.innerText = "타이머를 터치하여 시작하세요!";
+    s2Msg.innerText = "타이머를 터치해서 시작해보세요!";
     s2Msg.classList.replace('text-red-600', 'text-zinc-500');
 
     resetIdleTimer(); // 🌟 [업데이트] 대기 상태에서도 30초 방치 타이머 작동

@@ -39,7 +39,7 @@ export function initStage1() {
     s1AttemptsEl.innerText = state.s1_attempts; 
     
     // 🌟 [업데이트] 시작 전 안내 문구 변경 및 롤러 기본값 세팅
-    s1MsgEl.innerText = "아무 버튼이나 눌러서 슬롯을 회전시키세요!";
+    s1MsgEl.innerText = "슬롯을 터치해서 시작해보세요!";
     s1MsgEl.classList.replace('text-red-600', 'text-zinc-500');
     reelEls.forEach(el => el.innerText = "7");
 
