@@ -60,12 +60,12 @@ function checkS1State(lastStoppedIndex) {
         s1MsgEl.innerText = "앗, 틀렸습니다😂 다시 시작!";
         s1MsgEl.classList.replace('text-zinc-500', 'text-red-600');
         
-        // 🌟 2초(2000ms) 동안 정적 유지 후 재시작
+        // 🌟 1초(1000ms) 동안 정적 유지 후 재시작
         setTimeout(() => {
             currentBox.classList.remove('shake');
             state.s1_attempts++; // 횟수 누적
             startStage1(); 
-        }, 2000); 
+        }, 1000); 
         return;
     }
 
