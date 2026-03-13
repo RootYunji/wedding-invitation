@@ -55,6 +55,12 @@ function renderScreen(screenId) {
 }
 
 // 다른 파일에서 화면을 이동시킬 때 쓰는 함수
-export function navigateTo(hashName) {
-    window.location.hash = hashName; 
+export function navigateTo(hashName, replaceHistory = false) {
+    if (replaceHistory) {
+        // 방문 기록을 새로 쌓지 않고 현재 주소를 덮어씌웁니다.
+        window.location.replace('#' + hashName);
+    } else {
+        // 기존처럼 방문 기록을 쌓습니다. (기본값)
+        window.location.hash = hashName; 
+    }
 }
