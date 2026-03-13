@@ -78,7 +78,7 @@ function checkS1State(lastStoppedIndex) {
 // 🗑 포기 버튼 로직: 저장 없이 화면만 이동
 if (btnPassS1) {
     btnPassS1.addEventListener('click', () => {
-        if(!confirm("포기하시면 랭킹에 등록되지 않습니다. 청첩장으로 바로 이동할까요?")) return;
+        if(!confirm("포기시 RANK에서 제외됩니다. 바로 청첩장으로 이동할까요?")) return;
         
         state.s1_active = false;
         state.s1_intervals.forEach(clearInterval);
