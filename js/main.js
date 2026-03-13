@@ -2,8 +2,8 @@ import { state } from './gameState.js';
 import { navigateTo } from './ui.js'; 
 
 // 초기화(init) 및 정리(cleanup) 함수들
-import { initStage1, startStage1, cleanupStage1 } from './gameStage1.js'; 
-import { initStage2, startStage2, cleanupStage2 } from './gameStage2.js'; 
+import { initStage1, cleanupStage1 } from './gameStage1.js'; 
+import { initStage2, cleanupStage2 } from './gameStage2.js'; 
 import { initStage3, cleanupStage3 } from './gameStage3.js'; 
 
 // 모듈 내부 이벤트 리스너 바인딩을 위한 사이드 이펙트 로드
