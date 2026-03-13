@@ -50,10 +50,3 @@ document.getElementById('btn-close-story').addEventListener('click', () => {
         showScreen('invitation'); 
     }, 700);
 });
-
-// [4] 상단 뒤로가기 버튼 (처음으로 돌아가기)
-document.getElementById('btn-go-back').addEventListener('click', () => {
-    // 앱 헤더(상단바) 숨기고 첫 인트로 화면으로 전환
-    document.getElementById('app-header').classList.add('hidden');
-    showScreen('intro');
-});
