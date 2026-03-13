@@ -21,15 +21,33 @@
     
 </head>
 
-<body class="antialiased h-[100dvh] w-full overflow-hidden flex items-center justify-center relative bg-zinc-100">
+<!-- <body class="antialiased h-[100dvh] w-full overflow-hidden flex items-center justify-center relative bg-zinc-100">
     <div id="app-container" class="w-full h-full max-w-md bg-white shadow-2xl relative overflow-y-auto overflow-x-hidden flex flex-col mx-auto">
         
         <header class="p-4 text-center border-b border-zinc-100 bg-white/90 backdrop-blur sticky top-0 z-20 hidden" id="app-header">
             <h1 class="text-sm font-bold text-zinc-800 tracking-widest serif-en">WEDDING INVITATION</h1>
             <button id="btn-leaderboard" class="font-sans-kr absolute right-4 top-4 text-red-600 hover:text-red-500 text-xs font-bold flex items-center gap-1 transition">
-                🏆 
+                RANK 🏆 
+            </button>
+        </header> -->
+
+<body class="antialiased h-[100dvh] w-full overflow-hidden flex items-center justify-center relative bg-zinc-100">
+    <div id="app-container" class="w-full h-full max-w-md bg-white shadow-2xl relative overflow-y-auto overflow-x-hidden flex flex-col mx-auto">
+        
+        <header class="p-4 text-center border-b border-zinc-100 bg-white/90 backdrop-blur sticky top-0 z-20 hidden" id="app-header">
+            <button id="btn-go-back" class="font-sans-kr absolute left-4 top-4 text-zinc-500 hover:text-zinc-800 text-xs font-bold flex items-center gap-1 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                처음으로
+            </button>
+            
+            <h1 class="text-sm font-bold text-zinc-800 tracking-widest serif-en">WEDDING INVITATION</h1>
+            
+            <button id="btn-leaderboard" class="font-sans-kr absolute right-4 top-4 text-red-600 hover:text-red-500 text-xs font-bold flex items-center gap-1 transition">
+                RANK 🏆 
             </button>
         </header>
+
+
 
         <div id="screen-intro" class="flex-1 flex flex-col items-center justify-start px-8 pb-8 pt-4 text-center fade-in bg-white relative">
         <!-- <div id="screen-intro" class="flex-1 flex flex-col items-center justify-center p-8 text-center fade-in bg-white relative"> -->
@@ -63,7 +81,7 @@
 
         <div id="screen-stage1" class="flex-1 flex flex-col items-center justify-center p-6 hidden bg-white">
             <div class="mb-2 text-red-600 font-bold tracking-widest text-xs serif-en">STAGE 1</div>
-            <h2 class="text-2xl font-bold mb-3 text-zinc-800">행운의 777</h2>
+            <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 시간 🎰</h2>
             <p class="text-sm text-zinc-500 mb-8 text-center leading-relaxed font-sans-kr">
                 슬롯을 <strong class="text-red-600">터치하여</strong> 7을 맞추세요.<br>
                 <span class="text-xs">(틀리면 처음부터 다시 시작됩니다)</span>
@@ -94,7 +112,7 @@
 
         <div id="screen-stage2" class="flex-1 flex flex-col items-center justify-center p-6 hidden bg-white">
             <div class="mb-2 text-red-600 font-bold tracking-widest text-xs serif-en">STAGE 2</div>
-            <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 시간</h2>
+            <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 약속 ⏰</h2>
             <p class="text-sm text-zinc-500 mb-8 text-center leading-relaxed font-sans-kr">
                 시작을 누르고 예식 날짜인<br>
                 <strong class="text-red-600">10.31초</strong>에 가깝게 멈춰주세요!
@@ -113,7 +131,7 @@
 
         <div id="screen-stage3" class="flex-1 flex flex-col items-center justify-start p-8 hidden bg-white">
             <div class="mb-2 mt-4 text-red-600 font-bold tracking-widest text-xs serif-en">FINAL STAGE</div>
-            <h2 class="text-xl font-bold mb-2 text-zinc-800">퍼즐 맞추기</h2>
+            <h2 class="text-xl font-bold mb-2 text-zinc-800">우리의 완성 🧩</h2>
             <p class="text-sm text-zinc-500 mb-6 text-center font-sans-kr">
                 <span id="puzzle-desc">두 조각을 터치하여 완성해 주세요.</span>
             </p>
