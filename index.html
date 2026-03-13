@@ -60,7 +60,7 @@
                 </button>
 
                 <div class="border-t border-zinc-200 pt-2 mt-6 relative">
-                    <p class="text-xs text-zinc-400 mb-3 font-medium">🎁 Mini Game (소소한 재미와 상품을 곁들인) 🎁</p>
+                    <p class="text-xs text-zinc-400 mb-3 font-medium">🎁 Mini Game 🎁<br>(소소한 재미와 상품을 곁들인)</p>
                     <div class="flex gap-2 w-full">
                         <input type="text" id="guest-name" placeholder="이름(별명)" class="min-w-0 flex-1 px-4 py-3 rounded-sm border border-zinc-300 focus:outline-none focus:border-red-600 text-center text-zinc-800 bg-white placeholder-zinc-400 text-sm shadow-sm" maxlength="10">
                         <button id="btn-start-game" class="flex-shrink-0 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-sm transition whitespace-nowrap text-sm shadow-md"> 도전
@@ -124,7 +124,28 @@
         </div>
 
         <!-- Stage3 -->
-        <div id="screen-stage3" class="flex-1 flex flex-col items-center justify-start p-8 hidden bg-white">
+        <div id="screen-stage3" class="flex-1 flex flex-col items-center justify-center p-2 hidden bg-white">
+            
+            <div class="mb-2 mt-2 text-red-600 font-bold tracking-widest text-sm serif-en">STAGE 3</div>
+            <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 완성 🧩</h2>
+
+            <p class="text-sm text-zinc-500 mb-4 text-center leading-relaxed font-sans-kr">
+                웨딩 사진 <strong class="text-red-600">퍼즐</strong>을 맞춰주세요.<br>
+            </p>
+
+            <div class="text-red-600 font-bold text-2xl mb-4 serif-en tabular-nums" id="stage3-timer">0.00</div>
+
+            <div class="w-[90%] max-w-[320px] aspect-square relative shadow-sm rounded-md mb-8 mx-auto border border-zinc-200 overflow-hidden bg-zinc-50">
+                <div id="puzzle-grid" class="w-full h-full"></div>
+            </div>
+            
+            <div id="stage3-msg" class="mt-2 text-center font-bold text-red-600 h-6 text-sm font-sans-kr transition-opacity">사진을 터치해서 퍼즐을 섞어주세요!</div>
+
+            <button id="btn-pass-s3" class="mt-4 bg-zinc-100 border border-zinc-200 hover:bg-zinc-200 text-zinc-500 hover:text-zinc-700 font-medium py-3 px-4 rounded-full transition font-sans-kr shadow-sm text-sm active:scale-95">
+                😿 포기 😿
+            </button>
+        </div>
+        <!-- <div id="screen-stage3" class="flex-1 flex flex-col items-center justify-start p-8 hidden bg-white">
             <div class="mb-2 mt-2 text-red-600 font-bold tracking-widest text-s serif-en">STAGE 3</div>
             <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 완성 🧩</h2>
 
@@ -143,7 +164,7 @@
             <button id="btn-pass-s3" class="mt-4 bg-zinc-100 border border-zinc-200 hover:bg-zinc-200 text-zinc-500 hover:text-zinc-700 font-medium py-3 px-4 rounded-full transition font-sans-kr shadow-sm text-sm active:scale-95">
                 😿 포기 😿
             </button>
-        </div>
+        </div> -->
 
 
 

@@ -72,6 +72,7 @@ if (btnPassS2) {
         state.s2_active = false;
         cancelAnimationFrame(state.s2_timerRaf);
 
+        state.guestName = null;
         navigateTo('invitation');
     });
 }

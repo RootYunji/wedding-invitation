@@ -149,6 +149,8 @@ if (btnPassS3) {
 
         state.s3_active = false;
         cancelAnimationFrame(state.s3_timerRaf);
+
+        state.guestName = null;
         navigateTo('invitation');
     });
 }

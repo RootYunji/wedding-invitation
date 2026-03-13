@@ -91,6 +91,7 @@ if (btnPassS1) {
         state.s1_active = false;
         state.s1_intervals.forEach(clearInterval);
         
+        state.guestName = null;
         navigateTo('invitation'); 
     });
 }
