@@ -12,12 +12,36 @@ const GRID_SIZE = 3;
 const TOTAL_PIECES = GRID_SIZE * GRID_SIZE; 
 const PUZZLE_IMAGE_PATH = './assets/images/game/puzzle.png'; 
 
-export function initPuzzleDOM() {
+// 🌟 [업데이트] 방치 타이머 변수 추가
+let idleTimer = null;
+
+// 🌟 [업데이트] 30초 방치 시 초기화 로직
+function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    if (state.s3_completed) return; // 이미 성공했으면 작동 안 함
+    idleTimer = setTimeout(() => {
+        alert("시간이 초과되어 스테이지가 초기화됩니다.");
+        initStage3(); 
+    }, 60000); // 30초
+}
+
+// 🌟 [업데이트] 화면 이탈 시 호출될 리소스 정리 함수
+export function cleanupStage3() {
+    clearTimeout(idleTimer);
+    cancelAnimationFrame(state.s3_timerRaf);
+    state.s3_active = false;
+}
+
+// 🌟 [업데이트] 함수명을 main.js 구조에 맞게 initStage3으로 변경
+export function initStage3() {
+    cleanupStage3(); // 🌟 [업데이트] 혹시 모를 기존 타이머 정리
+    
     puzzleGrid.innerHTML = '';
     puzzleGrid.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
 
     state.s3_active = false;
     state.s3_started = false; 
+    state.s3_completed = false; // 🌟 [업데이트] 완료 플래그 추가
     
     if(s3TimerEl) {
         s3TimerEl.innerText = "0.00";
@@ -45,6 +69,7 @@ export function initPuzzleDOM() {
     }
     
     state.s3_puzzle = Array.from({length: TOTAL_PIECES}, (_, i) => i);
+    resetIdleTimer(); // 🌟 [업데이트] 대기 상태에서도 방치 타이머 작동
 }
 
 function updateS3Timer() {
@@ -78,6 +103,9 @@ function renderPuzzle() {
 }
 
 function handlePuzzleClick(originalVal) {
+    if (state.s3_completed) return; // 🌟 [업데이트] 완료되었으면 무시
+    resetIdleTimer(); // 🌟 [업데이트] 터치 시 방치 타이머 리셋
+
     if (!state.s3_started) {
         startPuzzleGame();
         return;
@@ -121,8 +149,8 @@ function checkS3Win() {
     const isWin = state.s3_puzzle.every((val, i) => val === i);
     
     if(isWin) {
-        state.s3_active = false;
-        cancelAnimationFrame(state.s3_timerRaf);
+        cleanupStage3(); // 🌟 [업데이트] 타이머 완벽하게 끄기
+        state.s3_completed = true; // 🌟 [업데이트] 플래그 변경
         
         // 최종 소요 시간 확정
         const finalTime = (Date.now() - state.s3_timerStart) / 1000;
@@ -157,11 +185,12 @@ function checkS3Win() {
 if (btnPassS3) {
     btnPassS3.addEventListener('click', () => {
         if(!confirm("포기하시면 RANK에서 제외됩니다. 바로 청첩장으로 이동할까요?")) return;
-        state.s3_active = false;
-        cancelAnimationFrame(state.s3_timerRaf);
+        
+        cleanupStage3(); // 🌟 [업데이트] 함수 사용으로 통일
         state.guestName = null;
-        navigateTo('invitation');
+        navigateTo('invitation', true); // 🌟 [업데이트] 히스토리 덮어쓰기
     });
 }
 
-initPuzzleDOM();
+// 🌟 [업데이트] 함수 이름 변경 반영
+initStage3();
