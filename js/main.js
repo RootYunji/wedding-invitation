@@ -50,3 +50,30 @@ document.getElementById('btn-close-story').addEventListener('click', () => {
         showScreen('invitation'); 
     }, 700);
 });
+
+
+// 개발용 뒤로가기 버튼 로직
+const btnBackDev = document.getElementById('btn-back-dev');
+
+btnBackDev.addEventListener('click', () => {
+    const currentScreen = document.querySelector('div[id^="screen-"]:not(.hidden)').id;
+
+    if (currentScreen === 'screen-stage2') {
+        // Stage 2에서 뒤로가면 1단계로 (타이머 중단 처리 포함)
+        state.s2_active = false;
+        cancelAnimationFrame(state.s2_timerRaf);
+        showScreen('stage1');
+        startStage1(); // 재시작 함수가 있다면 호출
+    } 
+    else if (currentScreen === 'screen-stage1') {
+        // Stage 1에서 뒤로가면 인트로로 (릴 중단 처리 포함)
+        state.s1_active = false;
+        state.s1_intervals.forEach(clearInterval);
+        showScreen('intro');
+        document.getElementById('app-header').classList.add('hidden'); // 헤더 숨김
+    }
+    else if (currentScreen === 'screen-stage3') {
+        showScreen('stage2');
+        startStage2(); // 2단계 재시작
+    }
+});

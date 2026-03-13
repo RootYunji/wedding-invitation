@@ -28,7 +28,13 @@
         
         <!-- game에서 상단바-->
         <header class="p-4 text-center border-b border-zinc-100 bg-white/90 backdrop-blur sticky top-0 z-20 hidden" id="app-header">
+            <!--나중에 주석처리-->
+            <button id="btn-back-dev" class="absolute left-4 top-4 text-zinc-400 hover:text-zinc-800 text-xs font-bold flex items-center gap-1 transition">
+                <span class="text-sm">←</span> BACK
+            </button>
+
             <h1 class="text-sm font-bold text-zinc-800 tracking-widest serif-en">WEDDING INVITATION</h1>
+            
             <button id="btn-leaderboard" class="font-sans-kr absolute right-4 top-4 text-red-600 hover:text-red-500 text-xs font-bold flex items-center gap-1 transition">
                 🏆 RANK 
             </button>
@@ -103,42 +109,21 @@
                 타이머 시간을 <strong class="text-red-600">10.31초</strong>에 가깝게 멈춰주세요.<br>
             </p>
             
-            <button id="btn-timer-area" class="w-56 h-56 rounded-full border border-zinc-200 flex items-center justify-center relative mb-10 shadow-[0_0_40px_rgba(0,0,0,0.03)] bg-white bg-contain bg-center bg-no-repeat transition-transform hover:scale-105 active:scale-95" style="background-image: url('./assets/images/game/timer.png'); outline: none; -webkit-tap-highlight-color: transparent;">
+            <button id="btn-timer-area" class="w-[90%] max-w-[320px] aspect-square flex items-center justify-center relative mb-10 bg-contain bg-center bg-no-repeat transition-transform hover:scale-105 active:scale-95" style="background-image: url('./assets/images/game/timer.png'); outline: none; -webkit-tap-highlight-color: transparent;">
                 
-                <div class="absolute inset-0 rounded-full border-[3px] border-red-600 border-t-transparent animate-spin hidden" id="stage2-spinner"></div>
+                <div class="absolute inset-4 rounded-full border-[3px] border-red-600 border-t-transparent animate-spin hidden" id="stage2-spinner"></div>
                 
-                <div class="text-5xl font-bold text-red-600 serif-en tabular-nums tracking-tighter relative z-10" id="stage2-timer-display">0.00</div>
+                <div class="text-6xl font-bold text-red-600 serif-en tabular-nums tracking-tighter relative z-10" id="stage2-timer-display">0.00</div>
             </button>
             
             <div id="stage2-msg" class="mt-4 text-center font-bold text-red-600 h-6 text-sm font-sans-kr transition-opacity">타이머를 터치해서 멈추세요!</div>
 
-            <button id="btn-pass-2" class="mt-8 bg-zinc-100 border border-zinc-200 hover:bg-zinc-200 text-zinc-500 hover:text-zinc-700 font-medium py-3 px-4 rounded-full transition font-sans-kr shadow-sm text-sm active:scale-95">
+            <button id="btn-pass-s2" class="mt-8 bg-zinc-100 border border-zinc-200 hover:bg-zinc-200 text-zinc-500 hover:text-zinc-700 font-medium py-3 px-4 rounded-full transition font-sans-kr shadow-sm text-sm active:scale-95">
                 😿 포기 😿
             </button>
         </div>
 
-
-
-
-        <div id="screen-stage2" class="flex-1 flex flex-col items-center justify-center p-6 hidden bg-white">
-            <div class="mb-2 text-red-600 font-bold tracking-widest text-xs serif-en">STAGE 2</div>
-            <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 약속 ⏰</h2>
-            <p class="text-sm text-zinc-500 mb-8 text-center leading-relaxed font-sans-kr">
-                시작을 누르고 예식 날짜인<br>
-                <strong class="text-red-600">10.31초</strong>에 가깝게 멈춰주세요!
-            </p>
-
-            <div class="w-56 h-56 rounded-full border-[1px] border-zinc-200 flex items-center justify-center relative mb-10 shadow-[0_0_40px_rgba(0,0,0,0.03)] bg-white">
-                <div class="absolute inset-0 rounded-full border-[3px] border-red-600 border-t-transparent animate-spin hidden" id="stage2-spinner"></div>
-                <div class="text-5xl font-light text-zinc-800 serif-en tabular-nums tracking-tighter" id="stage2-timer-display">0.00</div>
-            </div>
-
-            <button id="btn-action-stage2" class="font-sans-kr w-full max-w-xs bg-zinc-900 text-white font-bold py-4 px-6 rounded-full shadow-md transition hover:bg-black text-lg tracking-widest">
-                START
-            </button>
-            <div id="stage2-msg" class="mt-6 text-center font-medium text-zinc-600 h-10 text-sm font-sans-kr flex flex-col justify-center"></div>
-        </div>
-
+        <!-- Stage3 -->
         <div id="screen-stage3" class="flex-1 flex flex-col items-center justify-start p-8 hidden bg-white">
             <div class="mb-2 mt-4 text-red-600 font-bold tracking-widest text-xs serif-en">FINAL STAGE</div>
             <h2 class="text-xl font-bold mb-2 text-zinc-800">우리의 완성 🧩</h2>
