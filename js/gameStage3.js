@@ -184,7 +184,7 @@ function checkS3Win() {
 
 if (btnPassS3) {
     btnPassS3.addEventListener('click', () => {
-        if(!confirm("포기하시면 RANK에서 제외됩니다. 바로 청첩장으로 이동할까요?")) return;
+        if(!confirm("포기시 RANK에서 제외됩니다. \n바로 청첩장으로 이동할까요?")) return;
         
         cleanupStage3(); // 🌟 [업데이트] 함수 사용으로 통일
         state.guestName = null;

@@ -124,7 +124,7 @@ function checkS1State(lastStoppedIndex) {
 // 포기 버튼 
 if (btnPassS1) {
     btnPassS1.addEventListener('click', () => {
-        if(!confirm("포기시 RANK에서 제외됩니다. 바로 청첩장으로 이동할까요?")) return;
+        if(!confirm("포기시 RANK에서 제외됩니다. \n바로 청첩장으로 이동할까요?")) return;
         
         cleanupStage1(); // 🌟 [업데이트] 직접 끄는 대신 함수 사용
         state.guestName = null;
