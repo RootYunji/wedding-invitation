@@ -18,7 +18,7 @@ export function startStage1() {
 
     // 릴 애니메이션 인터벌 시작
     reelEls.forEach((el, i) => {
-        el.parentElement.style.borderColor = '#e5e5e5'; 
+
         if(state.s1_intervals[i]) clearInterval(state.s1_intervals[i]);
         state.s1_intervals[i] = setInterval(() => {
             state.s1_reels[i] = Math.floor(Math.random() * 9) + 1;
@@ -40,7 +40,6 @@ stopBtns.forEach((btn, i) => {
         else state.s1_reels[i] = Math.floor(Math.random() * 9) + 1;
         
         reelEls[i].innerText = state.s1_reels[i];
-        btn.style.borderColor = '#dc2626'; 
 
         checkS1State(i);
     });
