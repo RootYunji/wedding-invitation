@@ -1,128 +1,88 @@
-/* css/style.css */
 * {
     box-sizing: border-box;
 }
 
-html, body {
-    max-width: 100vw;
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
-}
-
 body {
+    /* 테일윈드 antialiased와 별개로 서체 기본 설정 */
     font-family: 'Noto Serif KR', serif;
     background-color: #f9f9f9; 
     color: #1a1a1a;
-    touch-action: manipulation;
+    /* 모바일에서 꾹 눌렀을 때 텍스트 선택 방지 (게임 버튼용) */
     user-select: none;
-}
-.font-sans-kr {
-    font-family: 'Noto Sans KR', sans-serif;
-}
-.serif-en {
-    font-family: 'Playfair Display', serif;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
-/* 숫자 컨테이너 (이미지의 빈 공간 위에 배치) */
+.font-sans-kr { font-family: 'Noto Sans KR', sans-serif; }
+.serif-en { font-family: 'Playfair Display', serif; }
+
+/* 1단계 슬롯머신 숫자 배치 (이미지 좌표에 맞춤) */
 .slot-numbers-container {
     position: absolute;
-    
-    /* 🌟 이 값들을 직접 수정하면서 맞춰야 합니다! */
-    left: 20%;      /* 왼쪽 여백 (숫자가 커지면 전체를 오른쪽으로 이동) */
-    top: 24.5%;     /* 상단 여백 (숫자가 커지면 전체를 아래로 이동) */
-    width: 68.5%;   /* 세 개 박스의 전체 가로 폭 조절 */
-    height: 32%;    /* 세 개 박스의 세로 폭 조절 */
-    
+    left: 20%;      
+    top: 24.5%;     
+    width: 68.5%;   
+    height: 32%;    
     display: flex;
-    justify-content: space-between; /* 박스 사이 간격 균일 배치 */
-    gap: 0.25rem; /* 박스 사이 미세 간격 조정 */
+    justify-content: space-between;
+    gap: 0.25rem;
+    pointer-events: none; /* 숫자가 클릭을 방해하지 않도록 */
 }
 
-/* 1단계: 슬롯머신 스타일 (이미지 배경 반응형) */
-.slot-machine-frame {
-    /* 뼈대는 HTML의 Tailwind 속성(relative, aspect-square 등)이 잡아줍니다 */
-    /* JS에서 흔들림 효과(shake)를 줄 때 넘치지 않도록 방지 */
-    box-shadow: none;
-    overflow: visible; 
-}
-
-/* 숫자가 들어가는 박스 (이미지의 빈 공간에 위치) */
 .slot-box {
-    flex: 1; /* 3개의 박스가 균일한 너비로 꽉 참 */
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    /* 🌟 반응형 텍스트: 최소 2rem ~ 화면비례 ~ 최대 3.5rem */
     font-size: clamp(3.5rem, 15vw, 5rem); 
     font-weight: 700;
-    color: #dc2626; /* 빨간색 텍스트 */
+    color: #dc2626;
     font-family: 'Playfair Display', serif;
-    
-    /* 숫자 바뀔 때 덜컹거림 방지를 위한 고정폭 폰트 속성 */
     font-variant-numeric: tabular-nums; 
 }
 
-/* 🌟 클릭 또는 포커스 시 나타나는 기본 아웃라인 및 빨간 박스 효과 제거 */
-.slot-box:focus, .slot-box:active {
-    outline: none; /* 포커스 시 나타나는 기본 아웃라인 제거 */
-    border-color: transparent; /* 클릭 시 테두리 색상 변경 방지 */
-}
-
-/* 하객이 터치하는 투명 클릭 영역 (숫자 바로 위에 덮어씌워짐) */
+/* 실제 터치 영역 */
 .stop-trigger-area {
     flex: 1;
     cursor: pointer;
-    background-color: transparent; /* 투명 */
-    border: 3px solid transparent; /* 평소엔 투명 테두리 (크기 유지) */
-    border-radius: 8px; /* 터치 영역 모서리 둥글게 */
+    background-color: transparent;
     outline: none;
-    transition: background-color 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
     z-index: 10;
-    -webkit-tap-highlight-color: transparent; /* 모바일 터치 시 파란 깜빡임 제거 */
 }
 
-/* 터치했을 때 살짝 어두워지는 피드백 효과 */
+/* 터치했을 때 피드백 (이미지 위에 살짝 어두워짐) */
 .stop-trigger-area:active {
-    background-color: rgba(0, 0, 0, 0.08); 
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* 3단계: 퍼즐 스타일 */
+/* 3단계 퍼즐 (이미지 경로 등은 나중에 수정 필요) */
 #puzzle-grid {
     display: grid;
     width: 100%;
     aspect-ratio: 1 / 1;
     gap: 2px;
-    background-color: #ffffff;
-    border: 1px solid #e5e5e5;
-    border-radius: 0.5rem;
-    overflow: hidden;
 }
 .puzzle-piece {
-    background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
     cursor: pointer;
-    transition: transform 0.1s, border 0.1s;
+    transition: transform 0.1s;
+    background-size: 300% 300%; /* 3x3 기준 */
 }
 .puzzle-piece.selected {
-    border: 3px solid #dc2626;
-    transform: scale(0.92);
+    outline: 3px solid #dc2626;
+    transform: scale(0.95);
     z-index: 10;
 }
 
 /* 애니메이션 */
-.fade-in { animation: fadeIn 0.8s ease-in-out forwards; }
-.slide-up { animation: slideUp 1s ease-out forwards; }
+.fade-in { animation: fadeIn 0.5s ease-out forwards; }
 .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
 
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+
 @keyframes shake {
     10%, 90% { transform: translate3d(-1px, 0, 0); }
     20%, 80% { transform: translate3d(2px, 0, 0); }
@@ -130,4 +90,6 @@ body {
     40%, 60% { transform: translate3d(4px, 0, 0); }
 }
 
-::-webkit-scrollbar { display: none; }
+/* 스크롤바 숨기기 (깔끔한 모바일 뷰) */
+#app-container::-webkit-scrollbar { display: none; }
+#app-container { -ms-overflow-style: none; scrollbar-width: none; }
