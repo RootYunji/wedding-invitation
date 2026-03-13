@@ -14,7 +14,7 @@ import './gameStage3.js';
 // [1] 청첩장 바로보기 (게임 Skip)
 document.getElementById('btn-direct-invite').addEventListener('click', () => {
     state.playedGame = false;
-    document.getElementById('final-game-result').classList.add('hidden');
+    //document.getElementById('final-game-result').classList.add('hidden');
     navigateTo('invitation');
 });
 
@@ -77,7 +77,7 @@ if (btnBackDev) {
         if (currentHash === 'stage2') {
             cleanupStage2(); 
             navigateTo('stage1', true); // 개발용 버튼도 덮어쓰기로 이동
-            startStage1(); 
+            initStage1(); 
         } 
         else if (currentHash === 'stage1') {
             cleanupStage1(); 
@@ -87,7 +87,7 @@ if (btnBackDev) {
         else if (currentHash === 'stage3') {
             cleanupStage3(); 
             navigateTo('stage2', true);
-            startStage2(); 
+            initStage2(); 
         }
     });
 }
