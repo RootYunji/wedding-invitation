@@ -27,15 +27,13 @@
         <!-- game에서 상단바-->
         <header class="p-4 text-center border-b border-zinc-100 bg-white/90 backdrop-blur sticky top-0 z-20 hidden" id="app-header">
             <h1 class="text-sm font-bold text-zinc-800 tracking-widest serif-en">WEDDING INVITATION</h1>
-            <h1 class="text-sm font-bold text-zinc-800 tracking-widest serif-en">WEDDING INVITATION</h1>
             <button id="btn-leaderboard" class="font-sans-kr absolute right-4 top-4 text-red-600 hover:text-red-500 text-xs font-bold flex items-center gap-1 transition">
-                RANK 🏆 
+                🏆 RANK 
             </button>
         </header>
 
-
+        <!-- 메인 -->
         <div id="screen-intro" class="flex-1 flex flex-col items-center justify-start px-8 pb-8 pt-4 text-center fade-in bg-white relative">
-        <!-- <div id="screen-intro" class="flex-1 flex flex-col items-center justify-center p-8 text-center fade-in bg-white relative"> -->
             <h1 class="serif-en text-5xl italic text-zinc-900 mb-2 mt-6">Wedding</h1>
             <h2 class="serif-en text-2xl text-zinc-600 mb-8 tracking-widest">invitation</h2>
             
@@ -50,7 +48,7 @@
             
             <div class="w-full space-y-3 mt-auto font-sans-kr">
                 <button id="btn-direct-invite" class="w-full bg-zinc-900 hover:bg-black text-white font-bold py-4 px-6 rounded-full tracking-widest transition shadow-md">
-                    청첩장 바로보기
+                    청첩장 확인 🤵👰
                 </button>
 
                 <div class="border-t border-zinc-200 pt-5 mt-4 relative">
@@ -64,12 +62,13 @@
             </div>
         </div>
 
+        <!-- Stage1 -->
         <div id="screen-stage1" class="flex-1 flex flex-col items-center justify-center p-6 hidden bg-white">
-            <div class="mb-2 text-red-600 font-bold tracking-widest text-xs serif-en">STAGE 1</div>
+            <div class="mb-2 text-red-600 font-bold tracking-widest text-s serif-en">STAGE 1</div>
             <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 시간 🎰</h2>
             <p class="text-sm text-zinc-500 mb-8 text-center leading-relaxed font-sans-kr">
-                슬롯을 <strong class="text-red-600">터치하여</strong> 7을 맞추세요.<br>
-                <span class="text-xs">(틀리면 처음부터 다시 시작됩니다)</span>
+                슬롯을 <strong class="text-red-600">터치하여</strong> 777 잭팟을 맞추세요.<br>
+                <!-- <span class="text-xs">(틀리면 처음부터 다시 시작됩니다)</span> -->
             </p>
             
             <div class="text-zinc-400 text-sm mb-4 font-sans-kr font-medium">도전 횟수: <span id="stage1-attempts" class="text-xl font-bold text-red-600">1</span>회</div>
@@ -91,8 +90,11 @@
                     </div>
                 </div>
             </div>
-
-            <div id="stage1-msg" class="mt-4 text-center font-bold text-red-600 h-6 text-sm font-sans-kr transition-opacity">숫자를 터치해서 멈추세요!</div>
+            <button id="btn-pass-s1" class="mt-12 flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-600 transition font-sans-kr">
+                <span class="text-sm underline underline-offset-4">포기</span>
+                <span class="text-xs">(청첩장 확인 🤵👰)</span>
+            </button>
+            <!-- <div id="stage1-msg" class="mt-4 text-center font-bold text-red-600 h-6 text-sm font-sans-kr transition-opacity">숫자를 터치해서 멈추세요!</div> <- 이 자리에 포기/n (청첩장 확인 🤵👰) 버튼 넣기 -->
         </div>
 
         <div id="screen-stage2" class="flex-1 flex flex-col items-center justify-center p-6 hidden bg-white">

@@ -36,7 +36,7 @@ stopBtns.forEach((btn, i) => {
         clearInterval(state.s1_intervals[i]);
         
         // 80% 확률로 무조건 7 당첨 보정
-        if(Math.random() < 0.8) state.s1_reels[i] = 7;
+        if(Math.random() < 0.9) state.s1_reels[i] = 7;
         else state.s1_reels[i] = Math.floor(Math.random() * 9) + 1;
         
         reelEls[i].innerText = state.s1_reels[i];
