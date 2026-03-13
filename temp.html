@@ -3,46 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>모바일 청첩장 & 시크릿 게임</title>
+    <title>비밀의 모바일 청첩장</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     <style>
         body {
-            /* 기본 폰트를 명조계열로 설정 */
-            font-family: 'Noto Serif KR', serif;
-            background-color: #f9f9f9; 
-            color: #1a1a1a;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #000000; /* Black Background */
+            color: #ffffff; /* White Text */
             touch-action: manipulation;
             user-select: none;
         }
-        /* UI 및 버튼에는 고딕체 적용 */
-        .font-sans-kr {
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-        .serif-en {
+        .serif {
             font-family: 'Playfair Display', serif;
         }
         
-        /* 1단계: 슬롯머신 스타일 (둥글고 깔끔하게) */
+        /* Pachinko Styles */
         .slot-machine {
-            background: #ffffff;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 1px solid #e5e5e5;
-            border-radius: 1.5rem; /* 둥근 테두리 */
+            background: linear-gradient(180deg, #222222 0%, #000000 100%);
+            box-shadow: inset 0 4px 6px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.8);
         }
         .slot-window {
-            background: #fdfdfd;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.03);
+            background: #ffffff;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.8);
             height: 100px;
             overflow: hidden;
             position: relative;
-            border: 1px solid #e5e5e5;
-            border-radius: 1rem; /* 둥근 테두리 */
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .slot-window:active {
-            transform: scale(0.95);
         }
         .slot-numbers {
             position: absolute;
@@ -51,39 +37,43 @@
             width: 100%;
             text-align: center;
             font-size: 3.5rem;
-            font-weight: 700;
+            font-weight: bold;
             line-height: 100px;
-            color: #dc2626; /* 확실한 레드 포인트 */
-            font-family: 'Playfair Display', serif;
+            color: #dc2626; /* Red-600 */
         }
 
-        /* 3단계: 퍼즐 스타일 */
+        /* Puzzle Styles */
         #puzzle-grid {
             display: grid;
             width: 100%;
             aspect-ratio: 1 / 1;
-            gap: 2px;
-            background-color: #ffffff;
-            border: 1px solid #e5e5e5;
+            gap: 1px;
+            background-color: #1a1a1a;
+            border: 2px solid #333333;
             border-radius: 0.5rem;
             overflow: hidden;
         }
         .puzzle-piece {
-            background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80');
+            /* 변경됨: 더 안정적인 raw.githubusercontent.com 주소 사용 */
+            background-image: url('https://raw.githubusercontent.com/jeyongprk-blip/wedd/main/images/image1.png');
             cursor: pointer;
             transition: transform 0.1s, border 0.1s;
         }
         .puzzle-piece.selected {
-            border: 3px solid #dc2626; /* 확실한 레드 포인트 */
-            transform: scale(0.92);
+            border: 2px solid #dc2626; /* Red Border */
+            transform: scale(0.9);
             z-index: 10;
         }
 
-        /* 애니메이션 */
+        /* Timer Styles */
+        .digital-timer {
+            font-variant-numeric: tabular-nums;
+            font-family: monospace;
+        }
+
+        /* Animations */
         .fade-in { animation: fadeIn 0.8s ease-in-out forwards; }
         .slide-up { animation: slideUp 1s ease-out forwards; }
-        .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
-        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -92,179 +82,156 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes shake {
-            10%, 90% { transform: translate3d(-1px, 0, 0); }
-            20%, 80% { transform: translate3d(2px, 0, 0); }
-            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-            40%, 60% { transform: translate3d(4px, 0, 0); }
-        }
         
+        /* Hide scrollbar */
         ::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="antialiased h-screen w-screen overflow-hidden flex items-center justify-center relative bg-zinc-100">
+<body class="text-white antialiased h-screen w-screen overflow-hidden flex items-center justify-center relative bg-black">
 
-    <div id="app-container" class="w-full h-full max-w-md bg-white shadow-2xl relative overflow-y-auto flex flex-col">
+    <!-- Global App Container -->
+    <div id="app-container" class="w-full h-full max-w-md bg-black shadow-2xl relative overflow-y-auto flex flex-col border-x border-zinc-900">
         
-        <header class="p-4 text-center border-b border-zinc-100 bg-white/90 backdrop-blur sticky top-0 z-20 hidden" id="app-header">
-            <h1 class="text-sm font-bold text-zinc-800 tracking-widest serif-en">WEDDING INVITATION</h1>
-            <button id="btn-leaderboard" class="font-sans-kr absolute right-4 top-4 text-red-600 hover:text-red-500 text-xs font-bold flex items-center gap-1 transition">
-                🏆 명예의 전당
+        <!-- Header -->
+        <header class="p-4 text-center border-b border-zinc-900 bg-black/80 backdrop-blur sticky top-0 z-20 hidden" id="app-header">
+            <h1 class="text-lg font-bold text-white tracking-wider">SECRET INVITATION</h1>
+            <button id="btn-leaderboard" class="absolute right-4 top-4 text-red-500 hover:text-red-400 text-sm font-semibold flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+                명예의 전당
             </button>
         </header>
 
-        <div id="screen-intro" class="flex-1 flex flex-col items-center justify-center p-8 text-center fade-in bg-white relative">
-            <h1 class="serif-en text-5xl italic text-zinc-900 mb-2 mt-8">Wedding</h1>
-            <h2 class="serif-en text-2xl text-zinc-600 mb-8 tracking-widest">invitation</h2>
-            
-            <div class="w-full aspect-[4/5] bg-cover bg-center mb-8 relative" style="background-image: url('https://images.unsplash.com/photo-1606800052052-a08af7148866?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80'); filter: grayscale(80%); border-radius: 8px;">
-                <div class="absolute -right-4 top-10 text-red-600 text-3xl transform rotate-12">♥</div>
-                <div class="absolute -left-4 bottom-20 text-red-600 text-2xl transform -rotate-12">♥</div>
+        <!-- SCREEN: Intro -->
+        <div id="screen-intro" class="flex-1 flex flex-col items-center justify-center p-6 text-center fade-in">
+            <div class="w-24 h-24 bg-red-900/30 rounded-full flex items-center justify-center mb-6 shadow-inner text-red-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.2 8.4c.5.38.8.97.8 1.6v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V10a2 2 0 0 1 .8-1.6l8-6a2 2 0 0 1 2.4 0l8 6Z"/><path d="m22 10-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 10"/></svg>
             </div>
-
-            <h3 class="text-xl font-bold text-zinc-800 mb-2">김준호 <span class="text-sm mx-1 font-normal text-zinc-400">and</span> 유서현</h3>
-            <p class="text-zinc-500 mb-8 text-sm leading-relaxed">
-                2026. 10. 31<br>
-                저희 결혼식에 초대합니다.
+            <h2 class="text-2xl font-bold text-white mb-4 leading-snug">
+                우리의 결혼식에<br>초대합니다.
+            </h2>
+            <p class="text-zinc-400 mb-8 text-sm leading-relaxed">
+                하지만 청첩장을 열어보려면<br>
+                <strong class="text-red-500">3가지 관문</strong>을 통과하셔야 합니다.<br>
+                당신의 센스와 순발력을 보여주세요!
             </p>
             
-            <div class="w-full space-y-3 mt-auto font-sans-kr">
-                <button id="btn-direct-invite" class="w-full bg-zinc-900 hover:bg-black text-white font-bold py-4 px-6 rounded-full tracking-widest transition shadow-md">
-                    청첩장 바로보기
+            <div class="w-full max-w-xs space-y-4">
+                <input type="text" id="guest-name" placeholder="이름 or 전화번호 (방명록에 남아요)" class="w-full px-4 py-3 rounded-xl border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-red-600 text-center text-white bg-zinc-900 placeholder-zinc-500" maxlength="10">
+                <button id="btn-start-game" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-[0_0_15px_rgba(220,38,38,0.3)] transition transform hover:scale-105 active:scale-95">
+                    도전 시작하기
                 </button>
-
-                <div class="border-t border-zinc-200 pt-5 mt-4 relative">
-                    <p class="text-xs text-zinc-400 mb-3 font-medium">소소한 재미와 상품이 있는 미니게임 🎁</p>
-                    <div class="flex gap-2">
-                        <input type="text" id="guest-name" placeholder="방명록 이름" class="flex-1 px-4 py-3 rounded-full border border-zinc-300 focus:outline-none focus:border-red-600 text-center text-zinc-800 bg-white placeholder-zinc-400 text-sm shadow-sm" maxlength="10">
-                        <button id="btn-start-game" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full transition whitespace-nowrap text-sm shadow-md">
-                            게임 도전
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <div id="screen-stage1" class="flex-1 flex flex-col items-center justify-center p-6 hidden bg-white">
-            <div class="mb-2 text-red-600 font-bold tracking-widest text-xs serif-en">STAGE 1</div>
-            <h2 class="text-2xl font-bold mb-3 text-zinc-800">행운의 777</h2>
-            <p class="text-sm text-zinc-500 mb-8 text-center leading-relaxed font-sans-kr">
-                슬롯을 <strong class="text-red-600">터치하여</strong> 7을 맞추세요.<br>
-                <span class="text-xs">(틀리면 처음부터 다시 시작됩니다)</span>
+        <!-- SCREEN: Stage 1 (Pachinko) -->
+        <div id="screen-stage1" class="flex-1 flex flex-col items-center justify-center p-6 hidden">
+            <div class="mb-2 text-red-600 font-bold tracking-widest text-sm">STAGE 1</div>
+            <h2 class="text-2xl font-bold mb-2 text-white">행운의 777</h2>
+            <p class="text-sm text-zinc-400 mb-6 text-center">
+                SPIN 버튼을 눌러 슬롯머신을 돌리고<br>
+                다시 눌러 한 번에 멈추세요!
             </p>
             
-            <div class="text-zinc-400 text-sm mb-4 font-sans-kr font-medium">도전 횟수: <span id="stage1-attempts" class="text-xl font-bold text-red-600">1</span>회</div>
+            <div class="text-red-500 font-bold text-lg mb-4">도전 횟수: <span id="stage1-attempts" class="text-2xl text-white">0</span>회</div>
 
-            <div class="slot-machine p-6 w-full max-w-xs mb-8 flex justify-between gap-4 relative">
+            <div class="slot-machine p-4 rounded-2xl w-full max-w-xs mb-8 flex justify-between gap-3 border-2 border-zinc-700 relative">
+                <!-- Slot 1 -->
                 <div class="flex-1 flex flex-col gap-2">
-                    <div class="slot-window" id="btn-stop-1">
+                    <div class="slot-window rounded-xl">
                         <div class="slot-numbers" id="reel-1">7</div>
                     </div>
                 </div>
+                <!-- Slot 2 -->
                 <div class="flex-1 flex flex-col gap-2">
-                    <div class="slot-window" id="btn-stop-2">
+                    <div class="slot-window rounded-xl">
                         <div class="slot-numbers" id="reel-2">7</div>
                     </div>
                 </div>
+                <!-- Slot 3 -->
                 <div class="flex-1 flex flex-col gap-2">
-                    <div class="slot-window" id="btn-stop-3">
+                    <div class="slot-window rounded-xl">
                         <div class="slot-numbers" id="reel-3">7</div>
                     </div>
                 </div>
             </div>
 
-            <div id="stage1-msg" class="mt-4 text-center font-bold text-red-600 h-6 text-sm font-sans-kr transition-opacity">숫자를 터치해서 멈추세요!</div>
+            <button id="btn-spin-stage1" class="bg-white hover:bg-zinc-200 text-black font-black text-xl py-4 px-12 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.2)] active:translate-y-1 transition-all">
+                SPIN!
+            </button>
+            
+            <div id="stage1-msg" class="mt-4 text-center font-bold text-red-600 h-6"></div>
         </div>
 
-        <div id="screen-stage2" class="flex-1 flex flex-col items-center justify-center p-6 hidden bg-white">
-            <div class="mb-2 text-red-600 font-bold tracking-widest text-xs serif-en">STAGE 2</div>
-            <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 시간</h2>
-            <p class="text-sm text-zinc-500 mb-8 text-center leading-relaxed font-sans-kr">
-                시작을 누르고 예식 날짜인<br>
-                <strong class="text-red-600">10.31초</strong>에 가깝게 멈춰주세요!
+        <!-- SCREEN: Stage 2 (10.31 Second Timer) -->
+        <div id="screen-stage2" class="flex-1 flex flex-col items-center justify-center p-6 hidden">
+            <div class="mb-2 text-red-600 font-bold tracking-widest text-sm">STAGE 2</div>
+            <h2 class="text-2xl font-bold mb-2 text-white">운명의 10.31초</h2>
+            <p class="text-sm text-zinc-400 mb-8 text-center">
+                시작을 누르고 <strong class="text-red-500">정확히 10.31초</strong>에<br>멈춰야 다음 관문이 열립니다!<br>
+                <span class="text-xs text-zinc-500">(오차 허용 범위: 10.21 ~ 10.41초)</span>
             </p>
 
-            <div class="w-56 h-56 rounded-full border-[1px] border-zinc-200 flex items-center justify-center relative mb-10 shadow-[0_0_40px_rgba(0,0,0,0.03)] bg-white">
-                <div class="absolute inset-0 rounded-full border-[3px] border-red-600 border-t-transparent animate-spin hidden" id="stage2-spinner"></div>
-                <div class="text-5xl font-light text-zinc-800 serif-en tabular-nums tracking-tighter" id="stage2-timer-display">0.00</div>
+            <div class="w-48 h-48 rounded-full border-8 border-zinc-900 flex items-center justify-center shadow-inner relative mb-8">
+                <div class="absolute inset-0 rounded-full border-8 border-red-600 border-t-transparent animate-spin hidden" id="stage2-spinner"></div>
+                <div class="text-5xl font-black text-white digital-timer" id="stage2-timer-display">0.00</div>
             </div>
 
-            <button id="btn-action-stage2" class="font-sans-kr w-full max-w-xs bg-zinc-900 text-white font-bold py-4 px-6 rounded-full shadow-md transition hover:bg-black text-lg tracking-widest">
-                START
+            <div class="text-sm text-zinc-400 mb-4 font-semibold">도전 횟수: <span id="stage2-attempts-display" class="text-red-500 text-lg">0</span></div>
+
+            <button id="btn-action-stage2" class="w-full max-w-xs bg-white text-black font-bold py-4 px-6 rounded-2xl shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:bg-zinc-200 text-xl transition transform active:scale-95">
+                시작
             </button>
-            <div id="stage2-msg" class="mt-6 text-center font-medium text-zinc-600 h-10 text-sm font-sans-kr flex flex-col justify-center"></div>
+            <div id="stage2-msg" class="mt-4 text-center font-bold text-red-600 h-6"></div>
         </div>
 
-        <div id="screen-stage3" class="flex-1 flex flex-col items-center justify-start p-8 hidden bg-white">
-            <div class="mb-2 mt-4 text-red-600 font-bold tracking-widest text-xs serif-en">FINAL STAGE</div>
-            <h2 class="text-xl font-bold mb-2 text-zinc-800">퍼즐 맞추기</h2>
-            <p class="text-sm text-zinc-500 mb-6 text-center font-sans-kr">
-                <span id="puzzle-desc">두 조각을 터치하여 완성해 주세요.</span>
-            </p>
+        <!-- SCREEN: Stage 3 (Dynamic Puzzle) -->
+        <div id="screen-stage3" class="flex-1 flex flex-col items-center justify-start p-6 hidden">
+            <div class="mb-1 mt-4 text-red-600 font-bold tracking-widest text-sm">FINAL STAGE</div>
+            <h2 class="text-xl font-bold mb-1 text-white">사랑의 조각 맞추기</h2>
+            
+            <!-- 변경됨: 이미지 새로고침 버튼 추가 -->
+            <div class="text-xs text-zinc-400 mb-4 text-center flex flex-col items-center gap-2">
+                <span id="puzzle-desc">두 조각을 터치하여 위치를 바꾸세요.</span>
+                <div class="flex items-center gap-4">
+                    <button class="text-red-500 cursor-pointer font-semibold hover:text-red-400 transition-colors" id="btn-auto-solve" style="display:none;">너무 어렵다면? (마법 지팡이✨)</button>
+                    <button class="text-zinc-500 cursor-pointer font-semibold flex items-center gap-1 hover:text-white transition-colors" id="btn-refresh-img">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                        이미지 새로고침
+                    </button>
+                </div>
+            </div>
 
-            <div class="text-red-600 font-bold text-2xl mb-4 serif-en tabular-nums" id="stage3-timer">0.00</div>
+            <div class="text-red-500 font-mono text-lg mb-2 digital-timer" id="stage3-timer">0.00 초</div>
 
-            <div class="w-full max-w-[300px] relative shadow-lg rounded-lg">
+            <div class="w-full max-w-[320px] relative">
                 <div id="puzzle-grid"></div>
             </div>
             
-            <button id="btn-start-stage3" class="font-sans-kr mt-10 bg-zinc-900 hover:bg-black text-white font-bold py-4 px-8 w-full max-w-[300px] rounded-full shadow-md transition tracking-widest">
-                퍼즐 섞기
+            <button id="btn-start-stage3" class="mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-full shadow-[0_0_15px_rgba(220,38,38,0.3)] transition">
+                퍼즐 섞고 시작하기
             </button>
         </div>
 
-        <div id="modal-story" class="absolute inset-0 bg-black/95 z-40 flex flex-col items-center justify-center p-6 hidden opacity-0 transition-opacity duration-1000 backdrop-blur-md">
-            <h2 class="serif-en text-3xl font-bold text-red-600 mb-8 tracking-widest fade-in" style="animation-delay: 0.3s; opacity: 0;">Our Story</h2>
+        <!-- SCREEN: Final Invitation -->
+        <div id="screen-invitation" class="flex-1 flex flex-col items-center bg-black hidden relative">
+            <div class="absolute inset-0 pointer-events-none" style="background-image: url('data:image/svg+xml,%3Csvg width=\'20\' height=\'20\' viewBox=\'0 0 20 20\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%233f3f46\' fill-opacity=\'0.2\' fill-rule=\'evenodd\'%3E%3Ccircle cx=\'3\' cy=\'3\' r=\'3\'/%3E%3Ccircle cx=\'13\' cy=\'13\' r=\'3\'/%3E%3C/g%3E%3C/svg%3E');"></div>
             
-            <div class="space-y-8 w-full max-w-sm">
-                <div class="flex flex-col items-center text-center slide-up" style="animation-delay: 1.0s; opacity: 0;">
-                    <span class="text-3xl font-bold text-white mb-2 serif-en">777</span>
-                    <p class="text-zinc-300 text-sm leading-relaxed font-sans-kr">
-                        우리가 처음 만나 사랑을 키워온 시간,<br>
-                        <strong class="text-red-500 text-base">7년 7개월 7일</strong>
-                    </p>
-                </div>
-                
-                <div class="w-px h-6 bg-zinc-800 mx-auto opacity-0 slide-up" style="animation-delay: 1.8s; opacity: 0;"></div>
-                
-                <div class="flex flex-col items-center text-center slide-up" style="animation-delay: 2.3s; opacity: 0;">
-                    <span class="text-3xl font-bold text-white mb-2 serif-en">10.31</span>
-                    <p class="text-zinc-300 text-sm leading-relaxed font-sans-kr">
-                        연인에서 부부로, 우리의 새로운 챕터가<br>
-                        시작되는 운명의 <strong class="text-red-500 text-base">10월 31일</strong>
-                    </p>
-                </div>
-
-                <div class="w-px h-6 bg-zinc-800 mx-auto opacity-0 slide-up" style="animation-delay: 3.1s; opacity: 0;"></div>
-                
-                <div class="flex flex-col items-center text-center slide-up" style="animation-delay: 3.6s; opacity: 0;">
-                    <span class="text-xl font-bold text-white mb-2">하나의 퍼즐</span>
-                    <p class="text-zinc-300 text-sm leading-relaxed font-sans-kr">
-                        서로 다른 삶의 조각들이 만나 비로소<br>완성된 우리의 <strong class="text-red-500 text-base">웨딩 사진</strong>
-                    </p>
-                </div>
-            </div>
-
-            <p class="mt-12 text-zinc-500 text-xs text-center slide-up font-sans-kr" style="animation-delay: 4.8s; opacity: 0;">
-                저희의 새로운 시작을 알리는 그 곳으로<br>소중한 모든 분들을 초대합니다.
-            </p>
-
-            <button id="btn-close-story" class="font-sans-kr mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 w-full max-w-xs rounded-full shadow-[0_0_20px_rgba(220,38,38,0.4)] transition transform hover:scale-105 active:scale-95 slide-up" style="animation-delay: 5.8s; opacity: 0;">
-                청첩장 열기
-            </button>
-        </div>
-
-        <div id="screen-invitation" class="flex-1 bg-white hidden relative overflow-y-auto">
-            <div class="w-full h-80 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;">
+            <!-- 변경됨: id 속성 추가 및 더 안정적인 원본 URL 사용 -->
+            <div id="invitation-bg" class="w-full h-64 bg-cover bg-top relative" style="background-image: url('https://raw.githubusercontent.com/jeyongprk-blip/wedd/main/images/image1.png');">
+                <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
             </div>
             
-            <div class="w-full px-6 py-12 text-center flex flex-col items-center slide-up bg-white">
-                <h1 class="serif-en text-4xl italic text-zinc-900 mb-6">Invitation</h1>
+            <div class="w-full px-8 pb-12 -mt-16 relative z-10 text-center flex flex-col items-center slide-up">
+                <span class="bg-red-900/50 text-red-400 text-xs font-bold px-3 py-1 rounded-full mb-4 shadow-sm border border-red-900/50">
+                    모든 관문 통과 완료!
+                </span>
                 
-                <h2 class="text-2xl font-bold text-zinc-800 mb-2">김준호 <span class="text-sm mx-1 font-normal text-zinc-400">and</span> 유서현</h2>
-                <div class="w-10 h-[2px] bg-red-600 my-6"></div>
+                <h1 class="serif text-3xl font-bold text-white mb-2">승현 & 윤지</h1>
+                <p class="text-sm text-zinc-500 tracking-widest mb-8">WEDDING INVITATION</p>
                 
-                <p class="text-zinc-600 leading-loose mb-12 text-sm">
+                <div class="w-12 h-px bg-red-600 mb-8"></div>
+                
+                <p class="text-zinc-300 leading-relaxed mb-8">
                     서로가 마주보며 다져온 사랑을<br>
                     이제 함께 한 곳을 바라보며<br>
                     걸어갈 수 있는 큰 사랑으로 키우고자 합니다.<br>
@@ -273,80 +240,130 @@
                     감사하겠습니다.
                 </p>
 
-                <div class="w-full border-t border-b border-zinc-200 py-8 mb-8 text-sm">
-                    <h3 class="font-bold text-zinc-800 mb-6 tracking-widest serif-en">WEDDING DAY</h3>
-                    <div class="flex flex-col gap-4 text-zinc-600 font-sans-kr">
-                        <div class="flex justify-between items-center px-4">
-                            <span class="font-bold text-red-600">일시</span>
-                            <span class="text-right">2026년 10월 31일 토요일 오후 1시</span>
+                <div class="bg-zinc-900/80 backdrop-blur w-full rounded-2xl p-6 mb-8 border border-zinc-800 shadow-lg">
+                    <h3 class="font-bold text-white mb-4 text-lg">예식 정보</h3>
+                    <div class="flex flex-col gap-3 text-sm text-zinc-300">
+                        <div class="flex justify-between border-b border-zinc-800 pb-2">
+                            <span class="font-semibold text-red-500">일시</span>
+                            <span class="text-white">2026년 10월 30일 토요일 오후 1시</span>
                         </div>
-                        <div class="flex justify-between items-start px-4">
-                            <span class="font-bold text-red-600 mt-1">장소</span>
-                            <span class="text-right leading-relaxed">서울 강남구 역삼동 123-45<br>라움 아트센터 2층 마제스틱홀</span>
+                        <div class="flex justify-between pb-1">
+                            <span class="font-semibold text-red-500">장소</span>
+                            <span class="text-right text-white">서울 강남구 역삼동 123-45<br>라움 아트센터 2층 마제스틱홀</span>
                         </div>
                     </div>
                 </div>
 
-                <div id="final-game-result" class="bg-zinc-50 w-full p-6 rounded-2xl text-sm text-zinc-600 border border-zinc-100 hidden mb-8 font-sans-kr">
-                    게임에 참여해주셔서 감사합니다!<br>
-                    <button id="btn-final-leaderboard" class="mt-3 text-red-600 font-bold underline underline-offset-4">
-                        최종 명예의 전당 확인하기
-                    </button>
-                </div>
+                <p class="text-xs text-zinc-500 mt-4 mb-2">게임에 참여해주셔서 진심으로 감사합니다!<br>전체순위 1~3등에 해당하신 분은 감사의 마음을 담아 <br>소정의 상품을 전달 드립니다.</p>
+                <button id="btn-final-leaderboard" class="text-red-500 hover:text-red-400 font-bold text-sm underline underline-offset-4">
+                    최종 명예의 전당 확인하기
+                </button>
             </div>
         </div>
 
-        <div id="modal-leaderboard" class="absolute inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-end justify-center hidden opacity-0 transition-opacity duration-300 font-sans-kr">
-            <div class="bg-white w-full max-w-md h-[80%] flex flex-col rounded-t-3xl transform translate-y-full transition-transform duration-300 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]" id="leaderboard-panel">
-                <div class="p-5 flex justify-between items-center border-b border-zinc-100">
-                    <h3 class="text-lg font-bold text-zinc-800 flex items-center gap-2">
-                        🏆 명예의 전당
+        <!-- MODAL: Story (Meaning of Games) -->
+        <div id="modal-story" class="absolute inset-0 bg-black/95 z-40 flex flex-col items-center justify-center p-6 hidden opacity-0 transition-opacity duration-1000 backdrop-blur-md">
+            <h2 class="serif text-3xl font-bold text-red-500 mb-8 tracking-widest fade-in" style="animation-delay: 0.3s; opacity: 0;">Our Story</h2>
+            
+            <div class="space-y-8 w-full max-w-sm">
+                <!-- 1단계 -->
+                <div class="flex flex-col items-center text-center slide-up" style="animation-delay: 1.0s; opacity: 0;">
+                    <span class="text-3xl font-black text-white mb-2 font-mono">777</span>
+                    <p class="text-zinc-400 text-sm leading-relaxed">
+                        우리가 처음 만나 사랑을 키워온 시간,<br>
+                        <strong class="text-red-400">7년 7개월 7일</strong>
+                    </p>
+                </div>
+                
+                <div class="w-px h-6 bg-zinc-800 mx-auto opacity-0 slide-up" style="animation-delay: 1.8s; opacity: 0;"></div>
+                
+                <!-- 2단계 -->
+                <div class="flex flex-col items-center text-center slide-up" style="animation-delay: 2.3s; opacity: 0;">
+                    <span class="text-3xl font-black text-white mb-2 font-mono">10.31</span>
+                    <p class="text-zinc-400 text-sm leading-relaxed">
+                        연인에서 부부로, 우리의 새로운 챕터가<br>
+                        시작되는 운명의 <strong class="text-red-400">10월 31일</strong>
+                    </p>
+                </div>
+
+                <div class="w-px h-6 bg-zinc-800 mx-auto opacity-0 slide-up" style="animation-delay: 3.1s; opacity: 0;"></div>
+                
+                <!-- 3단계 -->
+                <div class="flex flex-col items-center text-center slide-up" style="animation-delay: 3.6s; opacity: 0;">
+                    <span class="text-xl font-bold text-white mb-2">하나의 퍼즐</span>
+                    <p class="text-zinc-400 text-sm leading-relaxed">
+                        서로 다른 삶의 조각들이 만나 비로소<br>완성된 우리의 <strong class="text-red-400">웨딩 사진</strong>
+                    </p>
+                </div>
+            </div>
+
+            <p class="mt-12 text-zinc-500 text-xs text-center slide-up" style="animation-delay: 4.8s; opacity: 0;">
+                저희의 새로운 시작을 알리는 그 곳으로<br>소중한 모든 분들을 초대합니다.
+            </p>
+
+            <button id="btn-close-story" class="mt-8 bg-red-600 hover:bg-red-700 text-white font-bold py-4 w-full max-w-xs rounded-2xl shadow-[0_0_20px_rgba(220,38,38,0.4)] transition transform hover:scale-105 active:scale-95 slide-up" style="animation-delay: 5.8s; opacity: 0;">
+                청첩장 열기
+            </button>
+        </div>
+
+        <!-- MODAL: Leaderboard -->
+        <div id="modal-leaderboard" class="absolute inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-end justify-center hidden opacity-0 transition-opacity duration-300">
+            <div class="bg-zinc-950 w-full max-w-md rounded-t-3xl h-[85%] flex flex-col transform translate-y-full transition-transform duration-300 border-t border-zinc-800" id="leaderboard-panel">
+                <div class="p-4 flex justify-between items-center border-b border-zinc-800">
+                    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>
+                        명예의 전당
                     </h3>
-                    <button id="btn-close-leaderboard" class="text-zinc-400 hover:text-zinc-800 p-1 transition-colors">
-                        ✕
+                    <button id="btn-close-leaderboard" class="text-zinc-400 hover:text-white p-2 transition-colors">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                     </button>
                 </div>
                 
-                <div class="flex border-b border-zinc-100 text-xs font-bold text-zinc-400 overflow-x-auto whitespace-nowrap bg-zinc-50">
-                    <button class="flex-1 py-4 px-2 text-red-600 border-b-2 border-red-600 transition-colors" id="tab-stage1" onclick="switchLeaderboardTab(1)">1단계(횟수)</button>
-                    <button class="flex-1 py-4 px-2 hover:text-red-500 transition-colors" id="tab-stage2" onclick="switchLeaderboardTab(2)">2단계(오차)</button>
-                    <button class="flex-1 py-4 px-2 hover:text-red-500 transition-colors" id="tab-stage3" onclick="switchLeaderboardTab(3)">3단계(시간)</button>
-                    <button class="flex-1 py-4 px-2 hover:text-red-500 transition-colors" id="tab-overall" onclick="switchLeaderboardTab(4)">전체순위</button>
+                <div class="flex border-b border-zinc-800 text-xs sm:text-sm font-semibold text-zinc-500 overflow-x-auto whitespace-nowrap">
+                    <button class="flex-1 py-3 px-2 text-red-500 border-b-2 border-red-500 transition-colors" id="tab-stage1" onclick="switchLeaderboardTab(1)">1단계(횟수)</button>
+                    <button class="flex-1 py-3 px-2 hover:text-red-400 transition-colors" id="tab-stage2" onclick="switchLeaderboardTab(2)">2단계(정확도)</button>
+                    <button class="flex-1 py-3 px-2 hover:text-red-400 transition-colors" id="tab-stage3" onclick="switchLeaderboardTab(3)">3단계(시간)</button>
+                    <button class="flex-1 py-3 px-2 hover:text-red-400 transition-colors" id="tab-overall" onclick="switchLeaderboardTab(4)">전체 순위</button>
                 </div>
 
-                <div class="flex-1 overflow-y-auto p-4 bg-white relative" id="leaderboard-content">
-                    <div id="lb-loading" class="absolute inset-0 flex items-center justify-center hidden">
-                        <div class="w-8 h-8 border-2 border-zinc-200 border-t-red-600 rounded-full animate-spin"></div>
+                <div class="flex-1 overflow-y-auto p-4 bg-black relative" id="leaderboard-content">
+                    <!-- Loading Spinner -->
+                    <div id="lb-loading" class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-8 h-8 border-4 border-zinc-800 border-t-red-600 rounded-full animate-spin"></div>
                     </div>
-                    <div id="lb-list" class="space-y-2">
-                        </div>
+                    <!-- List -->
+                    <div id="lb-list" class="space-y-3 hidden">
+                        <!-- Items injected by JS -->
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-    <script>
+    <!-- Firebase & Application Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+
+
+        let db;
+        let auth;
+        let currentUserId = null;
+        let appId = 'wedding-invite-app'; // 고정된 앱 식별자
+        let isFirebaseReady = false;
+
+        const memoryDB = { stage1: [], stage2: [], stage3: [], overall: [] };
+
+        
+
         const state = {
             guestName: '익명',
-            playedGame: false,
-            // 1단계 상태
-            s1_attempts: 1, 
-            s1_active: false, 
-            s1_reels: [1, 1, 1], 
-            s1_intervals: [null, null, null], 
-            s1_stopped: [false, false, false],
-            // 2단계 상태
-            s2_active: false, 
-            s2_timerStart: 0, 
-            s2_timerRaf: null, 
-            s2_diff: 0,
-            // 3단계 상태
-            s3_active: false, 
-            s3_timerStart: 0, 
-            s3_timerRaf: null, 
-            s3_puzzle: [], 
-            s3_selectedIdx: null, 
-            s3_time: 0
+            s1_attempts: 0, s1_active: false, s1_reels: [1, 1, 1], s1_intervals: [null, null, null], s1_stopped: [false, false, false],
+            s2_active: false, s2_timerStart: 0, s2_timerRaf: null, s2_attempts: 0, s2_diff: 0, // Now Stage 2 (Timer)
+            s3_active: false, s3_timerStart: 0, s3_timerRaf: null, s3_puzzle: [], s3_selectedIdx: null, s3_usedMagic: false, s3_time: 0 // Now Stage 3 (Puzzle)
         };
 
         const screens = {
@@ -365,112 +382,96 @@
             });
             screens[screenId].classList.remove('hidden');
             screens[screenId].classList.add('fade-in');
-            
-            if(screenId !== 'intro' && screenId !== 'invitation') {
-                header.classList.remove('hidden');
-            } else {
-                header.classList.add('hidden');
-            }
+            if(screenId !== 'intro') header.classList.remove('hidden');
         }
 
-        /* [진입 로직] 청첩장 바로보기 */
-        document.getElementById('btn-direct-invite').addEventListener('click', () => {
-            showScreen('invitation');
-            document.getElementById('final-game-result').classList.add('hidden');
-        });
+        const formatTime = (ms) => (ms / 1000).toFixed(2);
 
-        document.getElementById('btn-start-game').addEventListener('click', () => {
-            const nameInput = document.getElementById('guest-name').value.trim();
-            if(!nameInput) {
-                alert("방명록에 남길 이름을 입력해주세요!");
-                return;
-            }
-            state.guestName = nameInput;
-            state.playedGame = true;
-            document.getElementById('final-game-result').classList.remove('hidden');
-            showScreen('stage1');
-            startStage1(); 
-        });
-
-        /*=========================================
-          [STAGE 1 LOGIC - 행운의 777]
-          요구사항 2 반영: 확률 보정 로직을 극단적으로 높여 난이도 하향 (80% 확률로 무조건 7)
-        =========================================*/
+        // STAGE 1 LOGIC (Pachinko)
         const reelEls = [document.getElementById('reel-1'), document.getElementById('reel-2'), document.getElementById('reel-3')];
-        const stopBtns = [document.getElementById('btn-stop-1'), document.getElementById('btn-stop-2'), document.getElementById('btn-stop-3')];
+        const btnSpinS1 = document.getElementById('btn-spin-stage1');
         const s1AttemptsEl = document.getElementById('stage1-attempts');
         const s1MsgEl = document.getElementById('stage1-msg');
 
-        function startStage1() {
-            state.s1_active = true;
-            state.s1_stopped = [false, false, false];
-            s1MsgEl.innerText = "숫자를 터치해서 멈추세요!";
-            s1MsgEl.classList.replace('text-red-600', 'text-zinc-500');
+        btnSpinS1.addEventListener('click', () => {
+            if(!state.s1_active) {
+                // START
+                state.s1_attempts++;
+                s1AttemptsEl.innerText = state.s1_attempts;
+                s1MsgEl.innerText = "";
+                state.s1_active = true;
+                state.s1_stopped = [false, false, false];
 
-            reelEls.forEach((el, i) => {
-                el.parentElement.style.borderColor = '#e5e5e5'; 
-                if(state.s1_intervals[i]) clearInterval(state.s1_intervals[i]);
-                state.s1_intervals[i] = setInterval(() => {
-                    state.s1_reels[i] = Math.floor(Math.random() * 9) + 1;
+                // 버튼 스타일 변경 (STOP 모드)
+                btnSpinS1.innerText = "STOP!";
+                btnSpinS1.classList.replace('bg-white', 'bg-red-600');
+                btnSpinS1.classList.replace('text-black', 'text-white');
+                btnSpinS1.classList.remove('hover:bg-zinc-200');
+                btnSpinS1.classList.add('hover:bg-red-700');
+
+                reelEls.forEach((el, i) => {
+                    if(state.s1_intervals[i]) clearInterval(state.s1_intervals[i]);
+                    state.s1_intervals[i] = setInterval(() => {
+                        state.s1_reels[i] = Math.floor(Math.random() * 9) + 1;
+                        el.innerText = state.s1_reels[i];
+                        el.style.transform = `translateY(${Math.random() * 4 - 2}px)`; 
+                    }, 40 + (i * 10)); 
+                });
+            } else {
+                // STOP
+                state.s1_active = false;
+                state.s1_stopped = [true, true, true];
+
+                // 버튼 스타일 복구 (SPIN 모드)
+                btnSpinS1.innerText = "다시 도전";
+                btnSpinS1.classList.replace('bg-red-600', 'bg-white');
+                btnSpinS1.classList.replace('text-white', 'text-black');
+                btnSpinS1.classList.remove('hover:bg-red-700');
+                btnSpinS1.classList.add('hover:bg-zinc-200');
+
+                // 30% 확률로 무조건 777 당첨
+                const isLucky = Math.random() < 0.3;
+
+                reelEls.forEach((el, i) => {
+                    clearInterval(state.s1_intervals[i]);
+                    
+                    if (isLucky) {
+                        state.s1_reels[i] = 7;
+                    } else {
+                        // 70% 확률로 완전 랜덤으로 설정
+                        // (우연히 777이 나올 수도 있지만 그 확률은 1/729로 매우 낮음)
+                        state.s1_reels[i] = Math.floor(Math.random() * 9) + 1;
+                    }
+                    
                     el.innerText = state.s1_reels[i];
-                }, 40 + (i * 15)); 
-            });
-        }
-
-        stopBtns.forEach((btn, i) => {
-            btn.addEventListener('click', () => {
-                if(!state.s1_active || state.s1_stopped[i]) return;
+                    el.style.transform = `translateY(0)`; 
+                });
                 
-                state.s1_stopped[i] = true;
-                clearInterval(state.s1_intervals[i]);
-                
-                // 기존 로직 응용: 확률 조작을 80%로 올려 사용자가 쉽게 맞추도록 유도
-                if(Math.random() < 0.8) state.s1_reels[i] = 7;
-                else state.s1_reels[i] = Math.floor(Math.random() * 9) + 1;
-                
-                reelEls[i].innerText = state.s1_reels[i];
-                btn.style.borderColor = '#dc2626'; // 레드 포인트 강조
-
-                checkS1State(i);
-            });
+                checkS1Win();
+            }
         });
 
-        function checkS1State(lastStoppedIndex) {
-            // 틀렸을 경우 전체 리셋
-            if (state.s1_reels[lastStoppedIndex] !== 7) {
-                state.s1_active = false;
-                
-                const currentBox = stopBtns[lastStoppedIndex];
-                currentBox.classList.add('shake');
-                s1MsgEl.innerText = "앗, 7이 아닙니다! 다시 돌아갑니다.";
-                s1MsgEl.classList.replace('text-zinc-500', 'text-red-600');
-                
-                setTimeout(() => {
-                    currentBox.classList.remove('shake');
-                    state.s1_attempts++;
-                    s1AttemptsEl.innerText = state.s1_attempts;
-                    startStage1(); 
-                }, 800);
-                return;
-            }
-
-            // 모두 맞췄을 경우
-            if(state.s1_stopped.every(s => s)) {
-                state.s1_active = false;
-                s1MsgEl.innerText = `성공! 총 ${state.s1_attempts}회 도전했습니다.`;
-                s1MsgEl.classList.replace('text-zinc-500', 'text-red-600');
-                
-                saveMockRecord('stage1', { name: state.guestName, attempts: state.s1_attempts });
-                setTimeout(() => showScreen('stage2'), 1500); 
+        function checkS1Win() {
+            const isWin = state.s1_reels.every(v => v === 7);
+            if(isWin) {
+                s1MsgEl.innerText = `성공! 기록: ${state.s1_attempts}회`;
+                s1MsgEl.classList.replace('text-red-600', 'text-white');
+                btnSpinS1.disabled = true;
+                btnSpinS1.classList.add('opacity-50');
+                saveRecord('stage1', { name: state.guestName, attempts: state.s1_attempts });
+                setTimeout(() => showScreen('stage2'), 1500); // Go to Timer (Stage 2)
+            } else {
+                s1MsgEl.innerText = "앗! 아깝습니다. 다시 SPIN 하세요!";
+                s1MsgEl.classList.replace('text-white', 'text-red-600');
             }
         }
 
-        /*=========================================
-          [STAGE 2 LOGIC - 10.31 Timer]
-        =========================================*/
+
+        // STAGE 2 LOGIC (10.31 Second Timer)
         const btnActionS2 = document.getElementById('btn-action-stage2');
         const s2TimerDisplay = document.getElementById('stage2-timer-display');
         const s2Spinner = document.getElementById('stage2-spinner');
+        const s2AttemptsDisplay = document.getElementById('stage2-attempts-display');
         const s2Msg = document.getElementById('stage2-msg');
 
         function updateS2Timer() {
@@ -484,58 +485,101 @@
             if(!state.s2_active) {
                 state.s2_active = true;
                 state.s2_timerStart = Date.now();
+                state.s2_attempts++;
+                s2AttemptsDisplay.innerText = state.s2_attempts;
                 
                 btnActionS2.innerText = "STOP";
-                btnActionS2.classList.replace('bg-zinc-900', 'bg-red-600');
+                btnActionS2.classList.replace('bg-white', 'bg-red-600');
+                btnActionS2.classList.replace('text-black', 'text-white');
+                btnActionS2.classList.remove('hover:bg-zinc-200');
+                btnActionS2.classList.add('hover:bg-red-700');
                 s2Spinner.classList.remove('hidden');
-                s2Msg.innerHTML = "";
+                s2Msg.innerText = "";
                 
                 updateS2Timer();
             } else {
                 state.s2_active = false;
                 cancelAnimationFrame(state.s2_timerRaf);
-                
                 const finalTime = (Date.now() - state.s2_timerStart) / 1000;
                 s2TimerDisplay.innerText = finalTime.toFixed(2);
                 
-                btnActionS2.classList.replace('bg-red-600', 'bg-zinc-200');
-                btnActionS2.classList.replace('text-white', 'text-zinc-400');
-                btnActionS2.disabled = true;
+                btnActionS2.innerText = "다시 시도";
+                btnActionS2.classList.replace('bg-red-600', 'bg-white');
+                btnActionS2.classList.replace('text-white', 'text-black');
+                btnActionS2.classList.remove('hover:bg-red-700');
+                btnActionS2.classList.add('hover:bg-zinc-200');
                 s2Spinner.classList.add('hidden');
 
-                const diff = Math.abs(finalTime - 10.31);
-                state.s2_diff = diff;
-                
-                s2Msg.innerHTML = `<span class="text-zinc-500">10.31초와의 오차:</span><br><strong class="text-red-600 text-lg">${diff.toFixed(2)}초!</strong><br><span class="text-xs text-zinc-400 mt-1">다음 단계로 이동합니다.</span>`;
-                
-                saveMockRecord('stage2', { name: state.guestName, diff: diff });
-                setTimeout(() => showScreen('stage3'), 2500); 
+                const diff = Math.abs(finalTime - 10.31); // Changed target to 10.31
+                if(diff <= 0.10) {
+                    s2Msg.innerText = "PERFECT!! 통과!";
+                    s2Msg.classList.replace('text-red-600', 'text-white');
+                    btnActionS2.disabled = true;
+                    btnActionS2.classList.add('opacity-50');
+                    
+                    state.s2_diff = diff;
+                    saveRecord('stage2', { name: state.guestName, attempts: state.s2_attempts, diff: diff });
+                    setTimeout(() => showScreen('stage3'), 1500); // Go to Puzzle (Stage 3)
+                } else {
+                    s2Msg.innerText = diff > 0 && finalTime > 10.31 ? "너무 늦었어요!" : "너무 빨라요!";
+                    s2Msg.classList.replace('text-white', 'text-red-600');
+                }
             }
         });
 
-        /*=========================================
-          [STAGE 3 LOGIC - Dynamic Puzzle]
-        =========================================*/
+
+        // STAGE 3 LOGIC (Dynamic Puzzle) & Refresh Button
         const puzzleGrid = document.getElementById('puzzle-grid');
         const btnStartS3 = document.getElementById('btn-start-stage3');
         const s3TimerEl = document.getElementById('stage3-timer');
+        const btnAutoSolve = document.getElementById('btn-auto-solve');
+        const btnRefreshImg = document.getElementById('btn-refresh-img');
+        const puzzleDesc = document.getElementById('puzzle-desc');
         
         const GRID_SIZE = 3; 
         const TOTAL_PIECES = GRID_SIZE * GRID_SIZE;
+        let currentBgUrl = 'https://raw.githubusercontent.com/jeyongprk-blip/wedd/main/images/image1.png';
+
+        // 이미지 새로고침 로직
+        btnRefreshImg.addEventListener('click', () => {
+            const svgIcon = btnRefreshImg.querySelector('svg');
+            svgIcon.classList.add('animate-spin'); // 빙글빙글 도는 애니메이션 효과
+            
+            // 캐시 우회를 위해 주소 끝에 타임스탬프 추가
+            const timestamp = new Date().getTime();
+            const freshUrl = `${currentBgUrl}?t=${timestamp}`;
+            
+            // 퍼즐 조각 배경 업데이트
+            const pieces = document.querySelectorAll('.puzzle-piece');
+            pieces.forEach(p => {
+                p.style.backgroundImage = `url('${freshUrl}')`;
+            });
+            
+            // 최종 청첩장 배경 업데이트
+            const invBg = document.getElementById('invitation-bg');
+            if (invBg) {
+                invBg.style.backgroundImage = `url('${freshUrl}')`;
+            }
+            
+            setTimeout(() => {
+                svgIcon.classList.remove('animate-spin');
+            }, 500);
+        });
 
         function updateS3Timer() {
             if(!state.s3_active) return;
-            s3TimerEl.innerText = ((Date.now() - state.s3_timerStart)/1000).toFixed(2);
+            s3TimerEl.innerText = formatTime(Date.now() - state.s3_timerStart) + " 초";
             state.s3_timerRaf = requestAnimationFrame(updateS3Timer);
         }
 
         function initPuzzleDOM() {
             puzzleGrid.innerHTML = '';
             puzzleGrid.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
+            puzzleDesc.innerText = `두 조각을 터치하여 위치를 바꾸세요. (${GRID_SIZE}x${GRID_SIZE})`;
 
             for(let i=0; i<TOTAL_PIECES; i++) {
                 const div = document.createElement('div');
-                div.className = 'puzzle-piece rounded-sm';
+                div.className = 'puzzle-piece';
                 div.dataset.index = i;
                 div.style.backgroundSize = `${GRID_SIZE * 100}% ${GRID_SIZE * 100}%`;
                 
@@ -584,23 +628,30 @@
             if(isWin) {
                 state.s3_active = false;
                 cancelAnimationFrame(state.s3_timerRaf);
-                const finalTime = (Date.now() - state.s3_timerStart) / 1000;
+                const finalTime = Date.now() - state.s3_timerStart;
                 state.s3_time = finalTime;
+                s3TimerEl.innerText = `성공! 기록: ${formatTime(finalTime)}초`;
+                s3TimerEl.classList.replace('text-red-500', 'text-white');
+                saveRecord('stage3', { name: state.guestName, time: finalTime, usedMagic: state.s3_usedMagic });
                 
-                document.getElementById('puzzle-desc').innerHTML = `<span class="text-red-600 font-bold">완성! 기록: ${finalTime.toFixed(2)}초</span>`;
-                
-                saveMockRecord('stage3', { name: state.guestName, time: finalTime });
-                saveMockRecord('overall', { 
+                // 마지막 스테이지(3단계) 통과 시 전체 기록 저장
+                saveRecord('overall', { 
                     name: state.guestName, 
                     s1_attempts: state.s1_attempts, 
+                    s2_attempts: state.s2_attempts, 
                     s2_diff: state.s2_diff, 
-                    s3_time: finalTime
+                    s3_time: finalTime,
+                    s3_usedMagic: state.s3_usedMagic
                 });
 
-                // 게임 클리어 후 Our Story 모달 띄우기 (요구사항 1 반영)
+                btnAutoSolve.style.display = 'none';
+                btnRefreshImg.style.display = 'none'; // 퍼즐 완료 시 버튼 숨기기
+                
+                // Story Modal 띄우기
                 setTimeout(() => {
                     const modalStory = document.getElementById('modal-story');
                     modalStory.classList.remove('hidden');
+                    // CSS transition 처리를 위한 짧은 딜레이
                     setTimeout(() => {
                         modalStory.classList.remove('opacity-0');
                     }, 50);
@@ -610,44 +661,86 @@
 
         btnStartS3.addEventListener('click', () => {
             btnStartS3.style.display = 'none';
+            btnAutoSolve.style.display = 'inline-block';
             state.s3_puzzle = Array.from({length: TOTAL_PIECES}, (_, i) => i);
             state.s3_puzzle.sort(() => Math.random() - 0.5);
             state.s3_selectedIdx = null;
             renderPuzzle();
-            
             state.s3_active = true;
             state.s3_timerStart = Date.now();
             updateS3Timer();
         });
 
-        // Our Story 모달 닫기 (실제 청첩장으로 이동)
-        document.getElementById('btn-close-story').addEventListener('click', () => {
-            const modalStory = document.getElementById('modal-story');
-            modalStory.classList.add('opacity-0');
-            setTimeout(() => {
-                modalStory.classList.add('hidden');
-                showScreen('invitation'); 
-            }, 700);
+        btnAutoSolve.addEventListener('click', () => {
+            if(!state.s3_active) return;
+            state.s3_usedMagic = true;
+            state.s3_puzzle = Array.from({length: TOTAL_PIECES}, (_, i) => i);
+            renderPuzzle();
+            state.guestName += "(마법)";
+            checkS3Win();
         });
 
-        /*=========================================
-          [Leaderboard 로컬 목업 로직]
-        =========================================*/
-        const memoryDB = { stage1: [], stage2: [], stage3: [], overall: [] };
-        
-        function saveMockRecord(stageStr, data) {
-            memoryDB[stageStr].push(data);
+
+        // LEADERBOARD & DB LOGIC
+        async function saveRecord(stageStr, data) {
+            data.timestamp = Date.now();
+            if(isFirebaseReady && currentUserId) {
+                try {
+                    const colRef = collection(db, 'artifacts', appId, 'public', 'data', stageStr);
+                    await addDoc(colRef, data);
+                } catch(e) {
+                    console.error("Firebase save error", e);
+                    if (e.code === 'permission-denied') {
+                        isFirebaseReady = false; // 에러 발생 시 메모리 모드로 전환
+                    }
+                    memoryDB[stageStr].push(data);
+                    triggerMemoryUpdate(stageStr);
+                }
+            } else {
+                memoryDB[stageStr].push(data);
+                triggerMemoryUpdate(stageStr);
+            }
+        }
+
+        const listeners = {};
+        const leaderboards = { stage1: [], stage2: [], stage3: [], overall: [] };
+
+        function setupLeaderboardListeners() {
+            if(!isFirebaseReady || !currentUserId) return;
+            ['stage1', 'stage2', 'stage3', 'overall'].forEach(stage => {
+                const colRef = collection(db, 'artifacts', appId, 'public', 'data', stage);
+                listeners[stage] = onSnapshot(colRef, (snapshot) => {
+                    const data = [];
+                    snapshot.forEach(doc => data.push(doc.data()));
+                    leaderboards[stage] = data;
+                    if(currentActiveTab === parseInt(stage.replace('stage', '')) || (stage === 'overall' && currentActiveTab === 4)) {
+                        renderLeaderboardList(currentActiveTab);
+                    }
+                }, (error) => {
+                    console.error(`Snapshot error for ${stage}:`, error);
+                    if (error.code === 'permission-denied') {
+                        console.warn("Firestore 권한 거부됨: 파이어베이스의 보안 규칙 설정을 확인해주세요. 임시 로컬 모드로 전환합니다.");
+                        isFirebaseReady = false;
+                        triggerMemoryUpdate(stage);
+                    }
+                });
+            });
+        }
+
+        function triggerMemoryUpdate(stageStr) {
+            leaderboards[stageStr] = [...memoryDB[stageStr]];
+            let tabNum = stageStr === 'overall' ? 4 : parseInt(stageStr.replace('stage', ''));
+            if(currentActiveTab === tabNum) renderLeaderboardList(currentActiveTab);
         }
 
         const modalLb = document.getElementById('modal-leaderboard');
         const panelLb = document.getElementById('leaderboard-panel');
         const lbList = document.getElementById('lb-list');
+        const lbLoading = document.getElementById('lb-loading');
         let currentActiveTab = 1;
 
         document.getElementById('btn-leaderboard').addEventListener('click', openLeaderboard);
-        if(document.getElementById('btn-final-leaderboard')) {
-            document.getElementById('btn-final-leaderboard').addEventListener('click', openLeaderboard);
-        }
+        document.getElementById('btn-final-leaderboard').addEventListener('click', openLeaderboard);
         document.getElementById('btn-close-leaderboard').addEventListener('click', closeLeaderboard);
 
         function openLeaderboard() {
@@ -656,6 +749,7 @@
                 modalLb.classList.remove('opacity-0');
                 panelLb.classList.remove('translate-y-full');
             }, 10);
+            window.switchLeaderboardTab = switchLeaderboardTab;
             switchLeaderboardTab(1);
         }
 
@@ -671,69 +765,120 @@
                 const tab = document.getElementById(`tab-stage${i}`);
                 if(tab) {
                     if(i === tabNum) {
-                        tab.classList.add('text-red-600', 'border-b-2', 'border-red-600');
-                        tab.classList.remove('hover:text-red-500', 'text-zinc-400');
+                        tab.classList.add('text-red-500', 'border-b-2', 'border-red-500');
+                        tab.classList.remove('hover:text-red-400', 'text-zinc-500');
                     } else {
-                        tab.classList.remove('text-red-600', 'border-b-2', 'border-red-600');
-                        tab.classList.add('hover:text-red-500', 'text-zinc-400');
+                        tab.classList.remove('text-red-500', 'border-b-2', 'border-red-500');
+                        tab.classList.add('hover:text-red-400', 'text-zinc-500');
                     }
                 }
             });
             const overallTab = document.getElementById('tab-overall');
             if(tabNum === 4) {
-                overallTab.classList.add('text-red-600', 'border-b-2', 'border-red-600');
-                overallTab.classList.remove('hover:text-red-500', 'text-zinc-400');
+                overallTab.classList.add('text-red-500', 'border-b-2', 'border-red-500');
+                overallTab.classList.remove('hover:text-red-400', 'text-zinc-500');
             } else {
-                overallTab.classList.remove('text-red-600', 'border-b-2', 'border-red-600');
-                overallTab.classList.add('hover:text-red-500', 'text-zinc-400');
+                overallTab.classList.remove('text-red-500', 'border-b-2', 'border-red-500');
+                overallTab.classList.add('hover:text-red-400', 'text-zinc-500');
             }
             renderLeaderboardList(tabNum);
         }
 
         function renderLeaderboardList(tabNum) {
             const stageStr = tabNum === 4 ? 'overall' : `stage${tabNum}`;
-            let data = [...memoryDB[stageStr]];
+            // 객체 데이터를 안전하게 복사하여 등수(점수) 속성을 추가할 수 있도록 매핑합니다.
+            let data = leaderboards[stageStr] ? leaderboards[stageStr].map(r => ({...r})) : [];
 
-            if(tabNum === 1) data.sort((a, b) => a.attempts - b.attempts); 
-            else if(tabNum === 2) data.sort((a, b) => a.diff - b.diff); 
-            else if(tabNum === 3) data.sort((a, b) => a.time - b.time);
-            else if(tabNum === 4) data.sort((a, b) => a.s2_diff - b.s2_diff || a.s1_attempts - b.s1_attempts || a.s3_time - b.s3_time);
+            // 정렬 로직 업데이트
+            if(tabNum === 1) { // 1단계 (Pachinko)
+                data.sort((a, b) => a.attempts - b.attempts); 
+            } else if(tabNum === 2) { // 2단계 (Timer)
+                data.sort((a, b) => (a.diff - b.diff) || (a.attempts - b.attempts));
+            } else if(tabNum === 3) { // 3단계 (Puzzle)
+                data.sort((a, b) => a.time - b.time);
+            } else if(tabNum === 4) { // 전체 순위 (등수별 점수 합산 방식)
+                data = data.filter(r => !r.s3_usedMagic);
+                
+                // 순위별 점수 계산 함수 (동점자 처리 포함)
+                const assignRanks = (arr, sortFn, rankKey) => {
+                    let sorted = [...arr].sort(sortFn);
+                    for (let i = 0; i < sorted.length; i++) {
+                        if (i > 0 && sortFn(sorted[i], sorted[i-1]) === 0) {
+                            sorted[i][rankKey] = sorted[i-1][rankKey]; // 동점이면 같은 등수(점수)
+                        } else {
+                            sorted[i][rankKey] = i + 1;
+                        }
+                    }
+                };
+
+                // 각 단계별로 독립적인 등수 매기기 (1등=1점, 2등=2점 ...)
+                assignRanks(data, (a, b) => a.s1_attempts - b.s1_attempts, 'r1');
+                assignRanks(data, (a, b) => (a.s2_diff - b.s2_diff) || (a.s2_attempts - b.s2_attempts), 'r2');
+                assignRanks(data, (a, b) => a.s3_time - b.s3_time, 'r3');
+
+                // 종합 점수 계산 (점수가 낮을수록 1등)
+                data.forEach(row => {
+                    row.totalScore = row.r1 + row.r2 + row.r3;
+                });
+
+                // 종합 점수 기준으로 정렬 (동점 시 2단계 오차 -> 3단계 시간순으로 우선순위)
+                data.sort((a, b) => (a.totalScore - b.totalScore) || (a.s2_diff - b.s2_diff) || (a.s3_time - b.s3_time));
+            }
 
             lbList.innerHTML = '';
             if(data.length === 0) {
-                lbList.innerHTML = `<div class="text-center text-zinc-400 py-10 text-sm">아직 기록이 없습니다.</div>`;
+                let emptyMsg = tabNum === 4 ? '아직 전체 클리어 기록이 없습니다.<br>(마법 지팡이를 사용하지 않은 기록만 등재됩니다)' : '아직 기록이 없습니다. 첫 번째로 도전해보세요!';
+                lbList.innerHTML = `<div class="text-center text-zinc-500 py-8 text-sm">${emptyMsg}</div>`;
             } else {
-                data.forEach((row, idx) => {
+                data.slice(0, 50).forEach((row, idx) => {
                     let valStr = '';
                     if (tabNum === 1) valStr = `${row.attempts}회`;
-                    else if (tabNum === 2) valStr = `오차 ${row.diff.toFixed(2)}초`;
-                    else if (tabNum === 3) valStr = `${row.time.toFixed(2)}초`;
+                    else if (tabNum === 2) valStr = `오차 ${row.diff.toFixed(2)}초 (${row.attempts}회)`;
+                    else if (tabNum === 3) valStr = `${formatTime(row.time)}초`;
                     else if (tabNum === 4) {
                         valStr = `<div class="text-right text-xs">
-                            <span class="block text-red-600 font-bold">오차 ${row.s2_diff.toFixed(2)}초</span>
-                            <span class="text-zinc-400 font-medium">1단 ${row.s1_attempts}회 | 3단 ${row.s3_time.toFixed(2)}초</span>
+                            <span class="block text-red-500 font-bold text-sm">종합 ${row.totalScore}점</span>
+                            <span class="text-zinc-500">1단 ${row.s1_attempts}회 | 2단 ${row.s2_diff.toFixed(2)}초 | 3단 ${formatTime(row.s3_time)}초</span>
                         </div>`;
                     }
                     
                     let medal;
-                    if(idx === 0) medal = '<span class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xs shadow-md">1</span>';
-                    else if(idx === 1) medal = '<span class="w-6 h-6 rounded-full bg-zinc-400 text-white flex items-center justify-center font-bold text-xs shadow-md">2</span>';
-                    else if(idx === 2) medal = '<span class="w-6 h-6 rounded-full bg-zinc-300 text-white flex items-center justify-center font-bold text-xs shadow-md">3</span>';
-                    else medal = `<span class="text-zinc-400 w-6 h-6 inline-block text-center leading-6 text-xs font-bold">${idx+1}</span>`;
+                    if(idx === 0) medal = '<span class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-xs shadow-sm border border-red-500">1</span>';
+                    else if(idx === 1) medal = '<span class="w-6 h-6 rounded-full bg-zinc-200 text-black flex items-center justify-center font-bold text-xs shadow-sm border border-white">2</span>';
+                    else if(idx === 2) medal = '<span class="w-6 h-6 rounded-full bg-zinc-800 text-white flex items-center justify-center font-bold text-xs shadow-sm border border-zinc-600">3</span>';
+                    else medal = `<span class="text-zinc-500 w-6 h-6 inline-block text-center leading-6 text-sm">${idx+1}</span>`;
                     
                     const div = document.createElement('div');
-                    div.className = "flex justify-between items-center bg-white p-4 rounded-xl border border-zinc-100 shadow-sm";
+                    div.className = "flex justify-between items-center bg-zinc-900 p-3 rounded-xl border border-zinc-800 shadow-lg";
                     div.innerHTML = `
                         <div class="flex items-center gap-3">
-                            ${medal}
-                            <span class="font-bold text-zinc-700 text-sm">${row.name}</span>
+                            <span class="text-xl">${medal}</span>
+                            <span class="font-bold text-white">${row.name}</span>
                         </div>
-                        ${tabNum === 4 ? valStr : `<span class="text-red-600 font-bold text-sm tabular-nums">${valStr}</span>`}
+                        ${tabNum === 4 ? valStr : `<span class="text-red-500 font-mono font-bold text-sm">${valStr}</span>`}
                     `;
                     lbList.appendChild(div);
                 });
             }
+            lbLoading.classList.add('hidden');
+            lbList.classList.remove('hidden');
         }
+
+        document.getElementById('btn-start-game').addEventListener('click', () => {
+            const nameInput = document.getElementById('guest-name').value.trim();
+            if(nameInput) state.guestName = nameInput;
+            showScreen('stage1');
+        });
+
+        // Story Modal 닫기 (청첩장 열기) 이벤트
+        document.getElementById('btn-close-story').addEventListener('click', () => {
+            const modalStory = document.getElementById('modal-story');
+            modalStory.classList.add('opacity-0');
+            setTimeout(() => {
+                modalStory.classList.add('hidden');
+                showScreen('invitation'); // 진짜 청첩장 화면으로 이동
+            }, 700);
+        });
 
         initPuzzleDOM();
 

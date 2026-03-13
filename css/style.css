@@ -25,7 +25,7 @@ body {
 }
 
 /* 1단계: 슬롯머신 스타일 */
-.slot-machine {
+/* .slot-machine {
     background: #ffffff;
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     border: 1px solid #e5e5e5;
@@ -56,6 +56,48 @@ body {
     line-height: 100px;
     color: #dc2626;
     font-family: 'Playfair Display', serif;
+} */
+
+/* 1단계: 슬롯머신 스타일 (이미지 배경 반응형) */
+.slot-machine-frame {
+    /* 뼈대는 HTML의 Tailwind 속성(relative, aspect-square 등)이 잡아줍니다 */
+    /* JS에서 흔들림 효과(shake)를 줄 때 넘치지 않도록 방지 */
+    overflow: visible; 
+}
+
+/* 숫자가 들어가는 박스 (이미지의 빈 공간에 위치) */
+.slot-box {
+    flex: 1; /* 3개의 박스가 균일한 너비로 꽉 참 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* 🌟 반응형 텍스트: 최소 2rem ~ 화면비례 ~ 최대 3.5rem */
+    font-size: clamp(2rem, 10vw, 3.5rem); 
+    font-weight: 700;
+    color: #dc2626; /* 빨간색 텍스트 */
+    font-family: 'Playfair Display', serif;
+    
+    /* 숫자 바뀔 때 덜컹거림 방지를 위한 고정폭 폰트 속성 */
+    font-variant-numeric: tabular-nums; 
+}
+
+/* 하객이 터치하는 투명 클릭 영역 (숫자 바로 위에 덮어씌워짐) */
+.stop-trigger-area {
+    flex: 1;
+    cursor: pointer;
+    background-color: transparent; /* 투명 */
+    border: 3px solid transparent; /* 평소엔 투명 테두리 (크기 유지) */
+    border-radius: 8px; /* 터치 영역 모서리 둥글게 */
+    outline: none;
+    transition: background-color 0.2s, border-color 0.2s;
+    z-index: 10;
+    -webkit-tap-highlight-color: transparent; /* 모바일 터치 시 파란 깜빡임 제거 */
+}
+
+/* 터치했을 때 살짝 어두워지는 피드백 효과 */
+.stop-trigger-area:active {
+    background-color: rgba(0, 0, 0, 0.08); 
 }
 
 /* 3단계: 퍼즐 스타일 */
