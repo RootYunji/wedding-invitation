@@ -19,7 +19,8 @@
     <link rel="stylesheet" href="./css/style.css">
 
     <link rel="preload" as="image" href="./assets/images/game/slot_machine.png">
-    
+    <link rel="preload" as="image" href="./assets/images/game/timer.png">
+
 </head>
 
 <body class="antialiased h-[100dvh] w-full overflow-hidden flex items-center justify-center relative bg-zinc-100">
@@ -90,6 +91,28 @@
             <div id="stage1-msg" class="mt-4 text-center font-bold text-red-600 h-6 text-sm font-sans-kr transition-opacity">숫자를 터치해서 멈추세요!</div>
 
             <button id="btn-pass-s1" class="mt-8 bg-zinc-100 border border-zinc-200 hover:bg-zinc-200 text-zinc-500 hover:text-zinc-700 font-medium py-3 px-4 rounded-full transition font-sans-kr shadow-sm text-sm active:scale-95">
+                😿 포기 😿
+            </button>
+        </div>
+
+        <!-- Stage2 -->
+        <div id="screen-stage2" class="flex-1 flex flex-col items-center justify-center p-6 hidden bg-white">
+            <div class="mb-2 text-red-600 font-bold tracking-widest text-s serif-en">STAGE 2</div>
+            <h2 class="text-2xl font-bold mb-3 text-zinc-800">우리의 약속 ⏰</h2>
+            <p class="text-sm text-zinc-500 mb-8 text-center leading-relaxed font-sans-kr">
+                타이머 시간을 <strong class="text-red-600">10.31초</strong>에 가깝게 멈춰주세요.<br>
+            </p>
+            
+            <button id="btn-timer-area" class="w-56 h-56 rounded-full border border-zinc-200 flex items-center justify-center relative mb-10 shadow-[0_0_40px_rgba(0,0,0,0.03)] bg-white bg-contain bg-center bg-no-repeat transition-transform hover:scale-105 active:scale-95" style="background-image: url('./assets/images/game/timer.png'); outline: none; -webkit-tap-highlight-color: transparent;">
+                
+                <div class="absolute inset-0 rounded-full border-[3px] border-red-600 border-t-transparent animate-spin hidden" id="stage2-spinner"></div>
+                
+                <div class="text-5xl font-bold text-red-600 serif-en tabular-nums tracking-tighter relative z-10" id="stage2-timer-display">0.00</div>
+            </button>
+            
+            <div id="stage2-msg" class="mt-4 text-center font-bold text-red-600 h-6 text-sm font-sans-kr transition-opacity">타이머를 터치해서 멈추세요!</div>
+
+            <button id="btn-pass-2" class="mt-8 bg-zinc-100 border border-zinc-200 hover:bg-zinc-200 text-zinc-500 hover:text-zinc-700 font-medium py-3 px-4 rounded-full transition font-sans-kr shadow-sm text-sm active:scale-95">
                 😿 포기 😿
             </button>
         </div>
@@ -222,13 +245,14 @@
             <div class="bg-white w-full max-w-md h-[80%] flex flex-col rounded-t-3xl transform translate-y-full transition-transform duration-300 shadow-[0_-10px_40px_rgba(0,0,0,0.1)]" id="leaderboard-panel">
                 <div class="p-5 flex justify-between items-center border-b border-zinc-100">
                     <h3 class="text-lg font-bold text-zinc-800 flex items-center gap-2">
-                        🏆 명예의 전당
+                        🏆 Mini Game Rank
                     </h3>
                     <button id="btn-close-leaderboard" class="text-zinc-400 hover:text-zinc-800 p-1 transition-colors">
                         ✕
                     </button>
                 </div>
                 
+                <!-- 여기 전체순위가 먼저, 그다음 1단계 2단계 3단계..-->
                 <div class="flex border-b border-zinc-100 text-xs font-bold text-zinc-400 overflow-x-auto whitespace-nowrap bg-zinc-50">
                     <button class="flex-1 py-4 px-2 text-red-600 border-b-2 border-red-600 transition-colors" id="tab-stage1" onclick="switchLeaderboardTab(1)">1단계(횟수)</button>
                     <button class="flex-1 py-4 px-2 hover:text-red-500 transition-colors" id="tab-stage2" onclick="switchLeaderboardTab(2)">2단계(오차)</button>

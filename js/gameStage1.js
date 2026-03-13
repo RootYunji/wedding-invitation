@@ -35,8 +35,8 @@ stopBtns.forEach((btn, i) => {
         state.s1_stopped[i] = true;
         clearInterval(state.s1_intervals[i]);
         
-        // 80% 확률로 무조건 7 당첨 보정
-        if(Math.random() < 0.6) state.s1_reels[i] = 7;
+        // 70% 확률로 무조건 7 당첨 보정
+        if(Math.random() < 0.7) state.s1_reels[i] = 7;
         else state.s1_reels[i] = Math.floor(Math.random() * 9) + 1;
         
         reelEls[i].innerText = state.s1_reels[i];
@@ -80,7 +80,7 @@ function checkS1State(lastStoppedIndex) {
 // 패스(건너뛰기) 버튼 클릭 핸들러
 if (btnPassS1) {
     btnPassS1.addEventListener('click', () => {
-        if(!confirm("포기하시면 명예의 전당 순위표에서 맨 아래로 밀려납니다. 계속할까요?")) return;
+        if(!confirm("포기하시면 RANK에서 제외됩니다. 바로 청첩장으로 이동할까요?")) return;
         
         // 실행 중인 애니메이션 및 상태 강제 종료
         state.s1_active = false;
