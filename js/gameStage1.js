@@ -1,6 +1,6 @@
 // [게임1] 777 슬롯
 import { state } from './gameState.js';
-import { showScreen } from './ui.js';
+import { navigateTo } from './ui.js';
 import { startStage2 } from './gameStage2.js';
 
 const reelEls = [document.getElementById('reel-1'), document.getElementById('reel-2'), document.getElementById('reel-3')];
@@ -77,10 +77,20 @@ function checkS1State(lastStoppedIndex) {
         state.s1_tries = state.s1_attempts; // 최종 결과값 저장
         
         setTimeout(() => {
-            showScreen('stage2');
+            navigateTo('stage2');
             startStage2(); 
         }, 1500);
     }
 }
 
-// 포기 버튼 (생략)
+// 포기 버튼 
+if (btnPassS1) {
+    btnPassS1.addEventListener('click', () => {
+        if(!confirm("포기시 RANK에서 제외됩니다. 바로 청첩장으로 이동할까요?")) return;
+        
+        state.s1_active = false;
+        state.s1_intervals.forEach(clearInterval);
+        
+        navigateTo('invitation'); 
+    });
+}

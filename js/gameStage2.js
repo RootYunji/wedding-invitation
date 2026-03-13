@@ -1,6 +1,6 @@
 // [게임2] 10.31초 맞추기
 import { state } from './gameState.js';
-import { showScreen } from './ui.js';
+import { navigateTo } from './ui.js';
 
 const btnTimerArea = document.getElementById('btn-timer-area'); 
 const s2TimerDisplay = document.getElementById('stage2-timer-display');
@@ -59,7 +59,7 @@ function checkS2State(finalTime) {
     s2Msg.classList.replace('text-zinc-500', 'text-red-600');
     
     setTimeout(() => {
-        showScreen('stage3');
+        navigateTo('stage3');
         // if (typeof startStage3 === 'function') startStage3();
     }, 1500);
 }
@@ -68,8 +68,10 @@ function checkS2State(finalTime) {
 if (btnPassS2) {
     btnPassS2.addEventListener('click', () => {
         if(!confirm("포기하시면 RANK에서 제외됩니다. 바로 청첩장으로 이동할까요?")) return;
+
         state.s2_active = false;
         cancelAnimationFrame(state.s2_timerRaf);
-        showScreen('invitation');
+
+        navigateTo('invitation');
     });
 }

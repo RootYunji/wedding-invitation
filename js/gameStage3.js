@@ -145,7 +145,8 @@ function checkS3Win() {
 
 if (btnPassS3) {
     btnPassS3.addEventListener('click', () => {
-        if(!confirm("여기서 포기하시면 RANK에서 제외됩니다. 정말 청첩장으로 이동할까요?")) return;
+        if(!confirm("포기하시면 RANK에서 제외됩니다. 바로 청첩장으로 이동할까요?")) return;
+
         state.s3_active = false;
         cancelAnimationFrame(state.s3_timerRaf);
         navigateTo('invitation');
