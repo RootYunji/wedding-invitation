@@ -20,7 +20,7 @@ function resetIdleTimer() {
     idleTimer = setTimeout(() => {
         alert("시간이 초과되어 스테이지가 초기화됩니다.");
         initStage2(); 
-    }, 60000); // 30초
+    }, 360000); // 30초
 }
 
 // 🌟 [업데이트] 화면 이탈 시 호출될 리소스 정리 함수
