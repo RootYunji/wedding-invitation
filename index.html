@@ -103,8 +103,8 @@
             </p>
             
             <div class="text-zinc-400 text-sm mb-4 font-sans-kr font-medium">도전 횟수: <span id="stage1-attempts" class="text-xl font-bold text-red-600">1</span>회</div>
-
-            <div class="slot-machine-frame p-2 w-[90%] max-w-[320px] mb-8 relative mx-auto aspect-square bg-contain bg-center bg-no-repeat shadow-inner" style="background-image: url('./assets/images/game/slot_machine.png'); border-radius: 12px;">
+            <div class="slot-machine-frame w-[90%] max-w-[320px] mb-8 relative mx-auto aspect-square bg-contain bg-center bg-no-repeat" style="background-image: url('./assets/images/game/slot_machine.png');"></div>
+            <!-- <div class="slot-machine-frame p-2 w-[90%] max-w-[320px] mb-8 relative mx-auto aspect-square bg-contain bg-center bg-no-repeat shadow-inner" style="background-image: url('./assets/images/game/slot_machine.png'); border-radius: 12px;"> -->
                 
                 <div class="slot-numbers-container absolute left-[20%] top-[30%] w-[60%] h-[40%] flex justify-between gap-1">
                     <div id="reel-1" class="slot-box bg-transparent">7</div>
@@ -121,9 +121,13 @@
             
             <div id="stage1-msg" class="mt-4 text-center font-bold text-red-600 h-6 text-sm font-sans-kr transition-opacity">숫자를 터치해서 멈추세요!</div>
 
-            <button id="btn-pass-s1" class="mt-12 flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-600 transition font-sans-kr">
-                <span class="text-sm underline underline-offset-4">포기 😿 (청첩장 이동)</span>
+            <button id="btn-pass-s1" class="mt-8 bg-zinc-100 border border-zinc-200 hover:bg-zinc-200 text-zinc-500 hover:text-zinc-700 font-medium py-3 px-6 rounded-full transition font-sans-kr shadow-sm text-sm active:scale-95">
+                포기 😿 (청첩장 이동)
             </button>
+
+            <!-- <button id="btn-pass-s1" class="mt-12 flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-600 transition font-sans-kr">
+                <span class="text-sm underline underline-offset-4">포기 😿 (청첩장 이동)</span>
+            </button> -->
         </div>
 
 
